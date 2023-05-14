@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./parts/head') %>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;1,100;1,200&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@0.7.4/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: poppins;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;> 
+<!-- component -->
+<!-- AlpineJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.8.1/cdn.min.js" defer></script>
+
+<!-- Slider Component Container -->
+<div class="flex flex-col items-center justify-center mt-32" x-cloak x-data="appData()" x-init="appInit()">
+    <div class="flex flex-col">
+
+        <!-- Navbar -->
+        <nav class="flex justify-between md:justify-around py-4 bg-white/10 backdrop-blur-md shadow-md w-full px-10 fixed top-0 left-0 right-0 z-10 px-8 md:px-3 w-full backdrop-blur flex-none transition-colors duration-500 bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
+
+            <!-- Logo Container -->
+            <div class="flex items-center">
+                <!-- Logo -->
+                <a class="cursor-pointer">
+                    <h3 class="text-2xl font-large bg-[radial-gradient(138.06%_1036.51%_at_95.25%_-2.54%,_#7ED4FD_14.06%,#709DF7_51.02%,#4D78EF_79.09%)] bg-clip-text font-medium font-bold leading-[1.2] tracking-tighter text-transparent">
+                        <%= settings.name %>
+                    </h3>
+                </a>
+            </div>
+
+            <!-- Links Section -->
+            <div class="items-center hidden space-x-8 lg:flex">
+                <a href="./dashboard" class="text-2xl font-large bg-[radial-gradient(138.06%_1036.51%_at_95.25%_-2.54%,_#7ED4FD_14.06%,#709DF7_51.02%,#4D78EF_79.09%)] bg-clip-text font-medium font-bold leading-[1.2] tracking-tighter text-transparent cursor-pointer">
+                    Dashboard
+                </a>
+            </div>
+        </nav>
+    </div>
+    <style>
+      section {
+      display: inline-block; 
+      width:200px; 
+      border:0px solid; 
+      color:white;
+      vertical-align:top
+    }
+    </style>
+        <center><h2 style="color:white;">Away From Keyboard</h2></center>
+              <center><a style="color:white">Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %>.</a></center>
+              <center><a style="color:white">You will gain coins again in <span id="arciotimer"><%= settings.api.arcio["afk page"].every %></span> seconds.</a></center>
+              <a></a>
+              <center><a style="color:white">You have gained <span id="arciogainedcoins">0</span> coins in this session</a></center>
+              <center><a style="color:white">You have <%= coins %> coins in total.</a></center>
+              <script>
+                  <%- arcioafktext %>
+              </script>
+          </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
+<style>
+.article-card {
+  width: 350px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  font-family: poppins;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 300ms;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.article-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-card .content {
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  padding: 30px 20px 20px 20px;
+  height: auto;
+  bottom: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.article-card .date,
+.article-card .title {
+  margin: 0;
+}
+
+.article-card .date {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.article-card .title {
+  font-size: 17px;
+  color: #fff;
+}
+</style>
