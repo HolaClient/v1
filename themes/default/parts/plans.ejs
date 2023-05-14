@@ -1,0 +1,60 @@
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<center>
+    <section style="background-color: transparent;" class="text-gray-400 body-font">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-col text-center w-full mb-12">
+            <h3 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Change User's Plan</h3>
+          </div>
+          <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:px-0 items-end sm:space-x-4 sm:space-y-0 space-y-4">
+            <div class="relative sm:mb-0 flex-grow w-full">
+              <label style="color: white; background-color: transparent;" for="full-name" class="leading-7 text-sm text-gray-400">Discord ID:</label>
+              <input type="number" id="IDPlan" class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 focus:bg-transparent text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div><br>
+          </div>
+          <div class="form-group">
+            <label style="color:white;" for="InputPackage">Plan:</label><BR>
+            <select class="form-control" style="border-radius: 15px; padding: 8px; background-color: transparent; color: white;" id="package">
+              <% for (let [name, value] of Object.entries(settings.api.client.packages.list)) { %>
+                <option style="background-color: transparent;" value="<%= name %>"><%= name %> (RAM: <%= value.ram %>MB, Disk: <%= value.disk %>MB, CPU: <%= value.cpu %>%, Servers: <%= value.servers %>)</option>
+              <% } %>
+            </select>
+        </div>
+        <a role="button" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" href="javascript: submitPlan()">Submit</a>
+      </section>
+    <script src="/assets/vendors/select2/select2.min.js"></script>
+    <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script>
+        async function submitPlan() {
+            let id = encodeURIComponent(document.getElementById("IDPlan").value);
+            let packagename = encodeURIComponent(document.getElementById("package").value);
+            window.location.href = "/setplan?id=" + id + "&package=" + packagename
+        }
+        async function submitSet() {
+            let id = encodeURIComponent(document.getElementById("IDSet").value);
+            let cpu = encodeURIComponent(document.getElementById("SetCPU").value);
+            let ram = encodeURIComponent(document.getElementById("SetRAM").value);
+            let disk = encodeURIComponent(document.getElementById("SetDisk").value);
+            let servers = encodeURIComponent(document.getElementById("SetServers").value);
+            window.location.href = "/setresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitAdd() {
+            let id = encodeURIComponent(document.getElementById("IDAdd").value);
+            let cpu = encodeURIComponent(document.getElementById("AddCPU").value);
+            let ram = encodeURIComponent(document.getElementById("AddRAM").value);
+            let disk = encodeURIComponent(document.getElementById("AddDisk").value);
+            let servers = encodeURIComponent(document.getElementById("AddServers").value);
+            
+            window.location.href = "/addresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+        async function submitRemove() {
+            let id = encodeURIComponent(document.getElementById("IDRemove").value);
+            let cpu = encodeURIComponent(document.getElementById("RemoveCPU").value);
+            let ram = encodeURIComponent(document.getElementById("RemoveRAM").value);
+            let disk = encodeURIComponent(document.getElementById("RemoveDisk").value);
+            let servers = encodeURIComponent(document.getElementById("RemoveServers").value);
+            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+        }
+    </script>
+    <script src="/assets/js/file-upload.js"></script>
+    <script src="/assets/js/typeahead.js"></script>
+    <script src="/assets/js/select2.js"></script>

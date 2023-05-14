@@ -1,0 +1,149 @@
+<div onload="showBanner('.banner.error')" class="banners-container">
+  <div class="banners">
+    <div class="banner error">
+      <div class="banner-icon"><i data-eva="alert-circle-outline" data-eva-fill="#ffffff" data-eva-height="48" data-eva-width="48"></i></div>
+      <div class="banner-message">Oauth2 code is Invalid, please login again!</div>
+      <div class="banner-close" onclick="hideBanners()"><i data-eva="close-outline" data-eva-fill="#ffffff"></i></div>
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/eva-icons" onload="eva.replace()"></script>
+
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
+:root {
+  font-family: "Montserrat";
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+i {
+  color: inherit;
+}
+
+.banners-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.banner {
+  color: white;
+  font-weight: 700;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 4px;
+  font-family: poppins;
+}
+.banner .banner-message {
+  flex: 1;
+  padding: 0 2rem;
+}
+.banner .banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.banner .banner-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.banner.success {
+  background: #10c15c;
+}
+.banner.success::after {
+  background: #10c15c;
+}
+.banner.error {
+  background: #ed1c24;
+}
+.banner.error::after {
+  background: #ed1c24;
+}
+.banner.info {
+  background: #0b22e2;
+}
+.banner.info::after {
+  background: #0b22e2;
+}
+
+.banner::after {
+  content: "";
+  position: absolute;
+  height: 10%;
+  width: 100%;
+  bottom: 100%;
+  left: 0;
+}
+
+.banner:not(.visible) {
+  display: none;
+  transform: translateY(-100%);
+}
+
+.banner.visible {
+  box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.12);
+  animation-name: banner-in;
+  animation-direction: forwards;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes banner-in {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.show-banner {
+  appearance: none;
+  background: #ededed;
+  border: 0;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin: 0.25rem;
+}
+</style>
+
+<script>
+  const showBanner = (selector) => {
+  hideBanners();
+  // Ensure animation plays even if the same alert type is triggered.
+  requestAnimationFrame(() => {
+    const banner = document.querySelector(selector);
+    banner.classList.add("visible");
+  });
+};
+
+const hideBanners = (e) => {
+  document
+    .querySelectorAll(".banner.visible")
+    .forEach((b) => b.classList.remove("visible"));
+};
+</script>

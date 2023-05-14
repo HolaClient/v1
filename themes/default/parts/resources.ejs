@@ -1,0 +1,71 @@
+<%
+let ram = 0;
+let disk = 0;
+let cpu = 0;
+let servers = pterodactyl.relationships.servers.data.length;
+for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+    ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+    disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+    cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+}
+%>
+<style>
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.grid-item {
+  background-color: rgba(165, 165, 165, 0.315);
+  border-radius: 5px;
+  padding: 20px;
+  width: 200px;
+  font-family: poppins;
+  color: white;
+  text-align: center;
+}
+
+.grid-item i {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.grid-item h2 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.grid-item p {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+<div class="container">
+<div class="grid-item">
+  <i class="fa fa-memory"></i>
+  <h2 style="color: white;"><%= ram %> / <%= packages.ram + extraresources.ram %></h2>
+  <h2 style="color: white;">RAM Used</h2>
+</div>
+<div class="grid-item">
+  <i class="fa fa-hdd"></i>
+  <h2 style="color: white;"><%= disk %> / <%= packages.disk + extraresources.disk %></h2>
+  <h2 style="color: white;">DISK Used</h2>
+</div>
+<div class="grid-item">
+  <i class="fa fa-microchip"></i>
+  <h2 style="color: white;"><%= cpu %> / <%= packages.cpu + extraresources.cpu %>%</h2>
+  <h2 style="color: white;">CPU Used</h2>
+</div>
+<div class="grid-item">
+  <i class="fa fa-server"></i>
+  <h2 style="color: white;"><%= servers %> / <%= packages.servers + extraresources.servers %></h2>
+  <h2 style="color: white;">SERVERS</h2>
+</div>
+</div>

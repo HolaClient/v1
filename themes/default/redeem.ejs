@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./parts/head') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./parts/nav') %>
+    <%- include('./parts/alert') %>
+    <% if (req.query.err) { %>
+      <div style="border-radius: 15px; color:white" class="alert">
+                      <% if (req.query.err == "MISSINGCOUPONCODE") { %>
+                        <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                          <strong>Please enter a coupon code and try again.</strong>
+                          <button aria-hidden="true" class="close" type="button">&times;</button>
+                        </div>
+                      <% } else if (req.query.err == "INVALIDCOUPONCODE") { %>
+                        <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                          <strong>This doesn't seem to work, check it it's already redeemed!</strong>
+                          <button aria-hidden="true" class="close" type="button">&times;</button>
+                        </div>
+                      <% } else if (req.query.err == "SUCCESSCOUPONCODE") { %>
+                        <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                          <strong>Successfully redeemed that coupon code.</strong>
+                          <button aria-hidden="true" class="close" type="button">&times;</button>
+                        </div>
+                      <% } else { %>
+                          Coupon failure.
+                      <% } %>
+                      </div>
+                  <% } %>
+    <br>
+    <center>
+      <h2 style="color: white; text-align: start;">| Redeem a coupon</h2><br>
+      <br>
+      <div>
+        <div class="col-md-6 grid-margin stretch-card">
+          <div>
+            <div>
+              <form action="/coupon_redeem" class="forms-sample">
+                <div class="form-group">
+                  <label style="color:white" for="InputCoins">Coupon Code:</label>
+                  <input name="code" style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputCoins" placeholder="COUPON CODE HERE">
+                </div>
+                <br>
+                <button role="button" style="background-color: gray; width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" class="btn btn-lg">Redeem</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </center>
+    <br>
+    
+</body>
+<footer>
+  <style>
+    footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+}
+  </style>
+  <%- include('./parts/footer') %>
+</footer>
+</html>

@@ -1,0 +1,144 @@
+<%- include('./parts/head') %>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./parts/nav') %>
+    <%- include('./parts/alert') %>
+    <% if (req.query.err) { %>
+      <div style="border-radius: 15px; color:white" class="alert">
+        <% if (req.query.err == "MISSINGFIELDS") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>Fill at least one field!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "CANNOTGIFTYOURSELF") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>You cannot gift yourself!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>Please answer the captcha!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>Invalid captcha responce, please try again!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "CANTAFFORD") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>You do not have enough coins!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "USERDOESNTEXIST") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>User ID not found!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } else if (req.query.err == "TOOLOWCOINS") { %>
+          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>You must gift more than a coin!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+          </div>
+        <% } %>
+      </div>
+    <% } else if (req.query.success) { %>
+      <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+        <strong>The coins has been successfully sent!</strong>
+        <button aria-hidden="true" class="close" type="button">&times;</button>
+      </div>
+    <% } %>
+    <br>
+    <center>
+      <h2 style="color: white; text-align: start;">| Gift Resources</h2><br>
+    <br>
+    <div>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div>
+          <div>
+            <form class="forms-sample">
+              <div class="form-group">
+                <label style="color:white" for="InputID">Discord ID</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputID" placeholder="Enter the Discord ID of the user you are gifting to here">
+              </div>
+              <div class="form-group">
+                <label style="color:white" for="InputCPU">CPU (In Percentage "%"):</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputCPU" placeholder="100">
+              </div>
+              <div class="form-group">
+                <label style="color:white" for="InputRAM">RAM (In MB):</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputRAM" placeholder="2048">
+              </div>
+              <div class="form-group">
+                <label style="color:white" for="InputDisk">Disk (In MB):</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputDisk" placeholder="10240">
+              </div>
+              <div class="form-group">
+                <label style="color:white" for="InputDisk">Servers:</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputServers" placeholder="2">
+              </div>
+              <br>
+             <a role="button" style="background-color: gray; width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" class="btn btn-lg" onclick="submitResources()" href="javascript: submitGift()">Gift Resources</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <h2 style="color: white; text-align: start;">| Gift Coins</h2><br>
+    <br>
+    <div>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div>
+          <div>
+            <form class="forms-sample">
+              <div class="form-group">
+                <label style="color:white" for="InputID1">Discord ID</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputID1" placeholder="Enter the Discord ID of the user you are gifting to here">
+              </div>
+              <div class="form-group">
+                <label style="color:white" for="InputCoins1">Coins:</label>
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputCoins" placeholder="100">
+              </div>
+              <br>
+              <a role="button" style="background-color: gray; width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" class="btn btn-lg" onclick="submitCoins()" href="javascript: submitGift()">Gift Coins</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <script src="/assets/vendors/select2/select2.min.js"></script>
+  <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script>
+    function submitCoins() {
+      let id1 = encodeURIComponent(document.getElementById("InputID1").value);
+      let coins = encodeURIComponent(document.getElementById("InputCoins").value);
+      document.location.href = `/giftcoins?id=${id1}&coins=${coins}`;
+    };
+    function submitResources() {
+      let id = encodeURIComponent(document.getElementById("InputID").value);
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+      let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+      let servers = encodeURIComponent(document.getElementById("InputServers").value);
+      document.location.href = `/giftres?id=${id}&ram=${ram}&disk=${disk}&cpu=${cpu}&servers=${servers}`;
+    };
+  </script>
+</center>  
+</body>
+<footer>
+</footer>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./parts/head') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./parts/nav') %>
+    <%- include('./parts/alert') %>
+    <% if (req.query.err) { %>
+        <div style="border-radius: 15px; color:white;" class="alert">
+            <% if (req.query.err == "MISSINGVARIABLE") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC1] You have not filled up all of the information, please fill up in order to create a server!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>            
+            <% } else if (req.query.err == "NOTANUMBER") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC2] RAM, CPU and DISK must be a number!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "ERRORONCREATE") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC3] The panel does not have enough space to create your server!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "BIGSERVERNAME") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC4] Your server's name cannot be more than 191 characters!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "TOOMUCHSERVERS") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC5] Too much servers!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "PREMIUMLOCATION") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC6] Please select a valid location!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "TOOLITTLECOINS") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC7] You do not have enough coins to create this server!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "CREATEDSERVER") { %>
+                    <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                        <strong id="servername">Successfully created a server.</strong>
+                        <button aria-hidden="true" class="close" type="button">&times;</button>
+                      </div>
+            <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC8] Please complete the captcha to prove you're a human!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+                <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                    <strong>[HCOC9] You didn't solve that captcha correctly, please try again!</strong>
+                    <button aria-hidden="true" class="close" type="button">&times;</button>
+                  </div>
+            <% } else { %>
+                <% if (req.query.num) { %>
+                    <% if (!isNaN(parseFloat(req.query.num))) { %>
+                        <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
+                            <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                                <strong>[HCOC10] You must make a server with at least <b><%= req.query.num %></b>!</strong>
+                                <button aria-hidden="true" class="close" type="button">&times;</button>
+                              </div>
+                            <% if (req.query.err.slice(-3) == "RAM") { %>
+                                MB RAM
+                            <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                MB disk
+                            <% } else { // CPU %>
+                                % CPU
+                            <% } %>
+                            <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                                <strong>if you want to create a server with the server type you have selected.</strong>
+                                <button aria-hidden="true" class="close" type="button">&times;</button>
+                              </div>
+                        <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
+                            <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                                <strong>[HCOC11] With the selected server type, you can have a maximum of <b><%= req.query.num %></b></strong>
+                                <button aria-hidden="true" class="close" type="button">&times;</button>
+                              </div>
+                            <% if (req.query.err.slice(-3) == "RAM") { %>
+                                MB RAM
+                            <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                MB disk
+                            <% } else { // CPU %>
+                                % CPU
+                            <% } %>
+                            on the server.
+                        <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
+                            <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                                <strong>[HCOC12] You do not have enough resources to make this server!</strong>
+                                <button aria-hidden="true" class="close" type="button">&times;</button>
+                              </div>
+                        <% } else { %>
+                            <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                                <strong>[HCOC13] Aw man! Your modification won't work here.</strong>
+                                <button aria-hidden="true" class="close" type="button">&times;</button>
+                              </div>
+                        <% } %>
+                    <% } else { %>
+                        <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                            <strong>[HCOC14] Aw man! Your modification won't work here.</strong>
+                            <button aria-hidden="true" class="close" type="button">&times;</button>
+                          </div>
+                    <% } %>
+                <% } else { %>
+                    <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                        <strong>[HCOC15] Invalid Locaton! Contact <%= settings.name %>'s staff</strong>
+                        <button aria-hidden="true" class="close" type="button">&times;</button>
+                      </div>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+    <br>
+    <center>
+        <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+        <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <style>::-webkit-scrollbar {
+          width: 8px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1; 
+        }
+         
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555; 
+        } body {
+background: #eee;
+font-family: poppins
+}
+
+#regForm {
+background-color: transparent;
+margin: 0px auto;
+font-family: poppins;
+padding: 40px;
+border-radius: 10px
+}
+
+#register{
+
+color: #fff;
+}
+
+h1 {
+text-align: center
+}
+
+input {
+padding: 10px;
+width: 100%;
+font-size: 17px;
+font-family: poppins;
+border: 1px solid #aaaaaa;
+border-radius: 10px;
+}
+
+
+
+.tab input:focus{
+
+border:1px solid #70cff5 !important;
+outline: none;
+}
+
+input.invalid {
+
+border:1px solid #e03a0666;
+}
+
+.tab {
+display: none
+}
+
+button {
+background-color: #2f2e30;
+color: #ffffff;
+border: none;
+border-radius: 50%;
+padding: 10px 20px;
+font-size: 17px;
+font-family: poppins;
+cursor: pointer
+}
+
+button:hover {
+opacity: 0.8
+}
+
+button:focus{
+
+outline: none !important;
+}
+
+#prevBtn {
+background-color: #eeacac
+}
+
+
+.all-steps{
+text-align: center;
+margin-top: 30px;
+margin-bottom: 30px;
+width: 100%;
+display: inline-flex;
+justify-content: center;
+}
+
+.step {
+height: 40px;
+width: 40px;
+margin: 0 2px;
+background-color: #bbbbbb;
+border: none;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 15px;
+color: #2f2e30;
+opacity: 0.5;
+}
+
+.step.active {
+opacity: 1
+}
+
+
+.step.finish {
+color: #fff;
+background: #8ae46e;
+opacity: 1;
+
+}
+
+
+
+.all-steps {
+text-align: center;
+margin-top: 30px;
+margin-bottom: 30px
+}
+
+.thanks-message {
+display: none
+}</style>
+        </head>
+        <style>
+body {
+background-image: url('<%= settings.background %>');
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+font-family: poppins;
+}
+</style>
+<body className='snippet-body' style="font-size: poppins; background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+        <div class="container mt-5">
+<div class="row d-flex justify-content-center align-items-center">
+<div class="col-md-8">
+<form id="regForm">
+<h1 id="register">Deploy Server</h1>
+<div class="all-steps" id="all-steps"> 
+<span class="step"><i class="bi bi-input-cursor-text"></i></span> 
+<span class="step"><i class="bi bi-memory"></i></span>
+<span class="step"><i class="bi bi-device-ssd"></i></span>
+<span class="step"><i class="bi bi-cpu"></i></span>
+<span class="step"><i class="bi bi-geo-alt"></i></span>
+<span class="step"><i class="bi bi-plugin"></i></span>
+</div>
+
+<div class="tab">
+<h6 style="color:white">Enter your server name</h6>
+<p>
+<input id="InputName" style="background-color: #2f2e30; color:#ffffff; border-radius: 15px; border-color:transparent;" type="text" placeholder="Server name" oninput="this.className = ''" name="fname"></p>
+
+</div>
+<div class="tab">
+<h6 style="color:white">Enter your server's ram to be allocated in MB (1GB = 1024MB)</h6>
+<p><input id="InputRAM" style="background-color: #2f2e30; color:#ffffff; border-radius: 15px; border-color:transparent;" value="<%= packages.ram + extraresources.ram %>" type="number" placeholder="Server ram" oninput="this.className = ''" name="fname"></p>
+
+</div>
+<div class="tab">
+<h6 style="color:white">Enter your server's disk to be allocated in MB (1GB = 1024MB)</h6>
+<p><input id="InputDisk" style="background-color: #2f2e30; color:#ffffff; border-radius: 15px; border-color:transparent;" value="<%= packages.disk + extraresources.disk %>" type="number" placeholder="Server disk" oninput="this.className = ''" name="fname"></p>
+
+</div>
+<div class="tab">
+<h6 style="color:white">Enter your server's cpu in "%" to be allocated</h6>
+<p><input id="InputCPU" style="background-color: #2f2e30; color:#ffffff; border-radius: 15px; border-color:transparent;" value="<%= packages.cpu + extraresources.cpu %>" type="number" placeholder="Server cpu" oninput="this.className = ''" name="fname"></p>
+</div>
+
+<div class="tab">
+<h6 style="color:white">Where your server should be deployed?</h6>
+<select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 15px; padding: 8px;" id="InputLoc">
+<% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+  <option value="<%= name %>"><%= value.name %></option>
+<% } %>
+</select>
+</div>
+
+
+<div class="tab">
+<h6 style="color:white">Enter your server software</h6>
+<select class="btn btn-secondary dropdown-toggle" style="background-color: #2a3038; border: 1px solid #2c2e33; color: #e4eaec; border-radius: 15px; padding: 8px;" id="InputEgg">
+<% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
+  <option value="<%= name %>"><%= value.display %></option>
+<% } %>
+</select>
+</div>
+<div class="thanks-message text-center" id="text-message">
+<h3 style="color:white">All Your Records Has been Carfully Recorded!</h3> <span style="color:white">Are you sure want to create a server using these resources?</span>
+<section class="info"><br/><br>
+<a role="button" id="create-btn" class="button"  href="javascript: submitNew()"><span style="color:white">Create Server
+    </span></a>
+</li>
+<br/> </section>
+</div>
+<div style="overflow:auto;" id="nextprevious">
+<div style="float:right;">
+<button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-angle-double-left"></i></button> 
+<button type="button" id="nextBtn" onclick="nextPrev(1)"><i class="fa fa-angle-double-right"></i></button> </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+        <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+        <script type='text/javascript' src='#'></script>
+        <script type='text/javascript' src='#'></script>
+        <script type='text/javascript' src='#'></script>
+        <script type='text/javascript'>var currentTab = 0;
+document.addEventListener("DOMContentLoaded", function(event) {
+
+
+showTab(currentTab);
+
+});
+
+function showTab(n) {
+var x = document.getElementsByClassName("tab");
+x[n].style.display = "block";
+if (n == 0) {
+document.getElementById("prevBtn").style.display = "none";
+} else {
+document.getElementById("prevBtn").style.display = "inline";
+}
+if (n == (x.length - 1)) {
+document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
+} else {
+document.getElementById("nextBtn").innerHTML = '<i class="fa fa-angle-double-right"></i>';
+}
+fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+var x = document.getElementsByClassName("tab");
+if (n == 1 && !validateForm()) return false;
+x[currentTab].style.display = "none";
+currentTab = currentTab + n;
+if (currentTab >= x.length) {
+
+document.getElementById("nextprevious").style.display = "none";
+document.getElementById("all-steps").style.display = "none";
+document.getElementById("register").style.display = "none";
+document.getElementById("text-message").style.display = "block";
+
+
+
+
+}
+showTab(currentTab);
+}
+
+function validateForm() {
+var x, y, i, valid = true;
+x = document.getElementsByClassName("tab");
+y = x[currentTab].getElementsByTagName("input");
+for (i = 0; i < y.length; i++) {
+if (y[i].value == "") {
+   y[i].className += " invalid";
+   valid = false;
+}
+
+
+}
+if (valid) {
+document.getElementsByClassName("step")[currentTab].className += " finish";
+}
+return valid;
+}
+
+function fixStepIndicator(n) {
+var i, x = document.getElementsByClassName("step");
+for (i = 0; i < x.length; i++) {
+x[i].className = x[i].className.replace(" active", "");
+}
+x[n].className += " active";
+}</script>
+        <script type='text/javascript'>var myLink = document.querySelector('a[href="#"]');
+        myLink.addEventListener('click', function(e) {
+          e.preventDefault();
+        });</script>
+            <!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="../../assets/vendors/select2/select2.min.js"></script>
+<script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script>
+async function submitNew() {
+let name = encodeURIComponent(document.getElementById("InputName").value);
+let egg = encodeURIComponent(document.getElementById("InputEgg").value);
+let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+let location = encodeURIComponent(document.getElementById("InputLoc").value);
+document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram}&disk=${disk}&cpu=${cpu}&location=${location}`;
+};
+</script>
+
+        </center>
+</body>
+<footer><br>
+    <%- include('./parts/footer') %>
+</footer>
+</html>

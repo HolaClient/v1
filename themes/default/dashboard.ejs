@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./parts/head') %>
+  </head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      font-family: poppins;
+    }
+    </style>
+      <style>
+        /* Container with overflow */
+        .scroll-container {
+          width: 300px;
+          height: 200px;
+          overflow: auto;
+          border: 1px solid #ccc;
+          padding: 10px;
+        }
+    
+        /* Styling the scrollbar track */
+        ::-webkit-scrollbar-track {
+          background-color: #f2f2f2;
+        }
+    
+        /* Styling the scrollbar thumb */
+        ::-webkit-scrollbar-thumb {
+          background-color: #bbb;
+        }
+    
+        /* Styling the scrollbar thumb on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background-color: #999;
+        }
+    
+        /* Styling the scrollbar thumb when active/being dragged */
+        ::-webkit-scrollbar-thumb:active {
+          background-color: #666;
+        }
+      </style>
+   <body style="font-size: poppins; background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./parts/nav') %>
+        <!-- AFK -->
+        <% if (settings.api.arcio["afk page"].allpages == true) { %>
+          <script>
+            <%- arcioafktext %>
+        </script>
+        <% } %>
+        <!---- ALERTS ----->
+    <%- include('./parts/alert') %>
+    <br>
+            <% if (req.query.err == "ALREADY_OPEN") { %>
+                  <div style="border-radius: 15px; text-align: center;" class="alert alert_error"> <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;</button> <strong>You can't open these much tabs at once!</strong> </div>
+                </div>
+            <% } else if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                <strong>Error: You will need at least <%= settings.renewals.cost %> to renew your Server!</strong>
+                <button aria-hidden="true" class="close" type="button">&times;</button>
+              </div>
+            <% } if (req.query.success === 'RENEWED') { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                <strong>Successfully renewed your Server!</strong>
+                <button aria-hidden="true" class="close" type="button">&times;</button>
+              </div>
+            <% } if (req.session.newaccount || req.session.password) { %>
+            <div style="background-color: #1b1c1d; border-radius: 15px" class="alert">
+                <% if (req.session.newaccount) { %>
+                    
+                <% } %>
+                <% if (req.session.password) { %>
+                  <%- include('./parts/newuser') %>
+                <% } %>
+            </div>
+        <% } %>
+        <% if (req.query.err) { %>
+          <% if (req.query.err !== "none") { %>
+            <div class="flex items-center space-x-2" style="background-color: transparent; border-radius: 15px; color: white;">
+            <% if (req.query.err == "CREATEDSERVER") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                <strong>Successfully created your Server!</strong>
+                <button aria-hidden="true" class="close" type="button">&times;</button>
+              </div>            
+            <% } %>
+            <% if (req.query.err == "DELETEDSERVER") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                <strong>Successfully deleted your Server!</strong>
+                <button style="align-self: center;" aria-hidden="true" class="close" type="button">&times;</button>
+              </div> 
+                        <% } %>
+            <% if (req.query.err == "MODIFYSERVER") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                <strong>Successfully changed your Server's Resources!</strong>
+                <button aria-hidden="true" class="close" type="button">&times;</button>
+              </div>
+                        <% } %>
+            </div>
+          <% } %>
+        <% } %>
+    <!---- BODY ----->
+    <h2 style="color: white; text-align: start;">| Your Resources</h2><br>
+    <%- include('./parts/resources') %><br><hr>
+    <% if (settings.advertisements.enabled == true) { %>
+    <h2 style="color: white; text-align: start;">| Advertisements</h2><br>
+    <%- include('./parts/ads') %><br><hr>
+    <% } else { %>
+      <h2 style="color: white; text-align: start;">| Extras</h2><br>
+    <%- include('./parts/info') %><br><hr>
+      <% } %>
+    
+</body>
+<footer>
+  <center>
+  <%- include('./parts/footer') %><br>
+  </center>
+</footer>
+</html>

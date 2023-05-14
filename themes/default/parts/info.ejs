@@ -1,0 +1,504 @@
+<center>
+<section class="grid">
+    <div class="card">
+      <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hdd-network-fill" viewBox="0 0 16 16">
+            <path d="M2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5.5v3A1.5 1.5 0 0 0 6 11.5H.5a.5.5 0 0 0 0 1H6A1.5 1.5 0 0 0 7.5 14h1a1.5 1.5 0 0 0 1.5-1.5h5.5a.5.5 0 0 0 0-1H10A1.5 1.5 0 0 0 8.5 10V7H14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+          </svg>
+      </span>
+      <h4>Create Server</h4>
+      <p>
+        Click to goto create server page!
+      </p>
+      <div class="shine"></div>
+      <div class="background">
+        <div class="tiles">
+          <div class="tile tile-1"></div>
+          <div class="tile tile-2"></div>
+          <div class="tile tile-3"></div>
+          <div class="tile tile-4"></div>
+  
+          <div class="tile tile-5"></div>
+          <div class="tile tile-6"></div>
+          <div class="tile tile-7"></div>
+          <div class="tile tile-8"></div>
+  
+          <div class="tile tile-9"></div>
+          <div class="tile tile-10"></div>
+        </div>
+  
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+      </div>
+    </section>
+    <section class="card">
+      <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16">
+            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+          </svg>
+      </span>
+      <h4>Earn Coins</h4>
+      <p>
+        Click to goto earn coins page!
+      </p>
+      <div class="shine"></div>
+      <div class="background">
+        <div class="tiles">
+          <div class="tile tile-1"></div>
+          <div class="tile tile-2"></div>
+          <div class="tile tile-3"></div>
+          <div class="tile tile-4"></div>
+  
+          <div class="tile tile-5"></div>
+          <div class="tile tile-6"></div>
+          <div class="tile tile-7"></div>
+          <div class="tile tile-8"></div>
+  
+          <div class="tile tile-9"></div>
+          <div class="tile tile-10"></div>
+        </div>
+  
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+      </div>
+    </div>
+</section>
+  </center>
+  <script>
+    // Dark & Light toggle
+
+document.querySelector(".day-night input").addEventListener("change", () => {
+  document.querySelector("body").classList.add("toggle");
+  setTimeout(() => {
+    document.querySelector("body").classList.toggle("light");
+
+    setTimeout(
+      () => document.querySelector("body").classList.remove("toggle"),
+      10
+    );
+  }, 5);
+});
+  </script>
+  <style>
+    body {
+  --background-color: transparent;
+  --text-color: #A1A1AA;
+  --card-background-color: rgba(92, 229, 247, 0.015);
+  --card-border-color: transparent;
+  --card-box-shadow-1: rgba(0, 0, 0, 0.05);
+  --card-box-shadow-1-y: 3px;
+  --card-box-shadow-1-blur: 6px;
+  --card-box-shadow-2: rgba(0, 0, 0, 0.1);
+  --card-box-shadow-2-y: 8px;
+  --card-box-shadow-2-blur: 15px;
+  --card-label-color: #FFFFFF;
+  --card-icon-color: #D4D4D8;
+  --card-icon-background-color: rgba(255, 255, 255, 0.08);
+  --card-icon-border-color: rgba(255, 255, 255, 0.12);
+  --card-shine-opacity: .1;
+  --card-shine-gradient: conic-gradient(from 205deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, rgba(52, 211, 153, 0.18) 295deg, rgba(16, 185, 129, 0) 360deg);
+  --card-line-color: #2A2B2C;
+  --card-tile-color: rgba(16, 185, 129, 0.05);
+  --card-hover-border-color: transparent;
+  --card-hover-box-shadow-1: rgba(0, 0, 0, 0.04);
+  --card-hover-box-shadow-1-y: 5px;
+  --card-hover-box-shadow-1-blur: 10px;
+  --card-hover-box-shadow-2: rgba(0, 0, 0, 0.3);
+  --card-hover-box-shadow-2-y: 15px;
+  --card-hover-box-shadow-2-blur: 25px;
+  --card-hover-icon-color: #34D399;
+  --card-hover-icon-background-color: rgba(52, 211, 153, 0.1);
+  --card-hover-icon-border-color: rgba(52, 211, 153, 0.2);
+  --blur-opacity: .09;
+}
+body.light {
+  --background-color: transparent;
+  --text-color: #52525B;
+  --card-background-color: transparent;
+  --card-border-color: rgba(24, 24, 27, 0.08);
+  --card-box-shadow-1: rgba(24, 24, 27, 0.02);
+  --card-box-shadow-1-y: 3px;
+  --card-box-shadow-1-blur: 6px;
+  --card-box-shadow-2: rgba(24, 24, 27, 0.04);
+  --card-box-shadow-2-y: 2px;
+  --card-box-shadow-2-blur: 7px;
+  --card-label-color: #18181B;
+  --card-icon-color: #18181B;
+  --card-icon-background-color: rgba(24, 24, 27, 0.04);
+  --card-icon-border-color: rgba(24, 24, 27, 0.1);
+  --card-shine-opacity: .3;
+  --card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, #EDFAF6 285deg, #FFFFFF 345deg, rgba(16, 185, 129, 0) 360deg);
+  --card-line-color: #E9E9E7;
+  --card-tile-color: rgba(16, 185, 129, 0.08);
+  --card-hover-border-color: rgba(24, 24, 27, 0.15);
+  --card-hover-box-shadow-1: rgba(24, 24, 27, 0.05);
+  --card-hover-box-shadow-1-y: 3px;
+  --card-hover-box-shadow-1-blur: 6px;
+  --card-hover-box-shadow-2: rgba(24, 24, 27, 0.1);
+  --card-hover-box-shadow-2-y: 8px;
+  --card-hover-box-shadow-2-blur: 15px;
+  --card-hover-icon-color: #18181B;
+  --card-hover-icon-background-color: rgba(24, 24, 27, 0.04);
+  --card-hover-icon-border-color: rgba(24, 24, 27, 0.34);
+  --blur-opacity: .1;
+}
+body.toggle .grid * {
+  transition-duration: 0s !important;
+}
+
+
+.card {
+  background-color: var(--background-color);
+  box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur) var(--card-box-shadow-1), 0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur) var(--card-box-shadow-2), 0 0 0 1px var(--card-border-color);
+  padding: 56px 16px 16px 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.25s;
+}
+
+.card .icon {
+  z-index: 2;
+  position: relative;
+  display: table;
+  padding: 8px;
+}
+
+.card .icon svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 24px;
+  height: 24px;
+  transform: translateZ(0);
+  color: var(--card-icon-color);
+  transition: color 0.25s;
+}
+.card h4 {
+  z-index: 2;
+  position: relative;
+  margin: 12px 0 4px 0;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--card-label-color);
+}
+.card p {
+  z-index: 2;
+  position: relative;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: transparent;
+}
+.card .shine {
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.card .shine:before {
+  content: "";
+  width: 150%;
+  padding-bottom: 150%;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  bottom: 55%;
+  filter: blur(35px);
+  opacity: var(--card-shine-opacity);
+  transform: translateX(-50%);
+  background-image: var(--card-shine-gradient);
+}
+.card .background {
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+  mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+}
+.card .background .tiles {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.card .background .tiles .tile {
+  position: absolute;
+  background-color: var(--card-tile-color);
+  -webkit-animation-duration: 8s;
+          animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  opacity: 0;
+}
+.card .background .tiles .tile.tile-4, .card .background .tiles .tile.tile-6, .card .background .tiles .tile.tile-10 {
+  -webkit-animation-delay: -2s;
+          animation-delay: -2s;
+}
+.card .background .tiles .tile.tile-3, .card .background .tiles .tile.tile-5, .card .background .tiles .tile.tile-8 {
+  -webkit-animation-delay: -4s;
+          animation-delay: -4s;
+}
+.card .background .tiles .tile.tile-2, .card .background .tiles .tile.tile-9 {
+  -webkit-animation-delay: -6s;
+          animation-delay: -6s;
+}
+.card .background .tiles .tile.tile-1 {
+  top: 0;
+  left: 0;
+  height: 10%;
+  width: 22.5%;
+}
+.card .background .tiles .tile.tile-2 {
+  top: 0;
+  left: 22.5%;
+  height: 10%;
+  width: 27.5%;
+}
+.card .background .tiles .tile.tile-3 {
+  top: 0;
+  left: 50%;
+  height: 10%;
+  width: 27.5%;
+}
+.card .background .tiles .tile.tile-4 {
+  top: 0;
+  left: 77.5%;
+  height: 10%;
+  width: 22.5%;
+}
+.card .background .tiles .tile.tile-5 {
+  top: 10%;
+  left: 0;
+  height: 22.5%;
+  width: 22.5%;
+}
+.card .background .tiles .tile.tile-6 {
+  top: 10%;
+  left: 22.5%;
+  height: 22.5%;
+  width: 27.5%;
+}
+.card .background .tiles .tile.tile-7 {
+  top: 10%;
+  left: 50%;
+  height: 22.5%;
+  width: 27.5%;
+}
+.card .background .tiles .tile.tile-8 {
+  top: 10%;
+  left: 77.5%;
+  height: 22.5%;
+  width: 22.5%;
+}
+.card .background .tiles .tile.tile-9 {
+  top: 32.5%;
+  left: 50%;
+  height: 22.5%;
+  width: 27.5%;
+}
+.card .background .tiles .tile.tile-10 {
+  top: 32.5%;
+  left: 77.5%;
+  height: 22.5%;
+  width: 22.5%;
+}
+@-webkit-keyframes tile {
+  0%, 12.5%, 100% {
+    opacity: 1;
+  }
+  25%, 82.5% {
+    opacity: 0;
+  }
+}
+@keyframes tile {
+  0%, 12.5%, 100% {
+    opacity: 1;
+  }
+  25%, 82.5% {
+    opacity: 0;
+  }
+}
+.card .background .line {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.card .background .line:before, .card .background .line:after {
+  content: "";
+  position: absolute;
+  background-color: var(--card-line-color);
+  transition: transform 0.35s;
+}
+.card .background .line:before {
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+.card .background .line:after {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+}
+.card .background .line.line-1:before {
+  top: 10%;
+}
+.card .background .line.line-1:after {
+  left: 22.5%;
+}
+.card .background .line.line-1:before, .card .background .line.line-1:after {
+  transition-delay: 0.3s;
+}
+.card .background .line.line-2:before {
+  top: 32.5%;
+}
+.card .background .line.line-2:after {
+  left: 50%;
+}
+.card .background .line.line-2:before, .card .background .line.line-2:after {
+  transition-delay: 0.15s;
+}
+.card .background .line.line-3:before {
+  top: 55%;
+}
+.card .background .line.line-3:after {
+  right: 22.5%;
+}
+.card:hover {
+  box-shadow: 0px 3px 6px var(--card-hover-box-shadow-1), 0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur) var(--card-hover-box-shadow-2), 0 0 0 1px var(--card-hover-border-color);
+}
+.card:hover .icon::after {
+  background-color: var(--card-hover-icon-background-color);
+  border-color: var(--card-hover-icon-border-color);
+}
+.card:hover .icon svg {
+  color: var(--card-hover-icon-color);
+}
+.card:hover .shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+.card:hover .background .tiles {
+  opacity: 1;
+  transition-delay: 0.25s;
+}
+.card:hover .background .tiles .tile {
+  -webkit-animation-name: tile;
+          animation-name: tile;
+}
+.card:hover .background .line {
+  opacity: 1;
+  transition-duration: 0.15s;
+}
+.card:hover .background .line:before {
+  transform: scaleX(1);
+}
+.card:hover .background .line:after {
+  transform: scaleY(1);
+}
+.card:hover .background .line.line-1:before, .card:hover .background .line.line-1:after {
+  transition-delay: 0s;
+}
+.card:hover .background .line.line-2:before, .card:hover .background .line.line-2:after {
+  transition-delay: 0.15s;
+}
+.card:hover .background .line.line-3:before, .card:hover .background .line.line-3:after {
+  transition-delay: 0.3s;
+}
+
+.day-night {
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  opacity: 0.3;
+}
+.day-night input {
+  display: none;
+}
+.day-night input + div {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  box-shadow: inset 8px -8px 0 0 var(--text-color);
+  transform: scale(1) rotate(-2deg);
+  transition: box-shadow 0.5s ease 0s, transform 0.4s ease 0.1s;
+}
+.day-night input + div:before {
+  content: "";
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: background-color 0.3s ease;
+}
+.day-night input + div:after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin: -3px 0 0 -3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 -23px 0 var(--text-color), 0 23px 0 var(--text-color), 23px 0 0 var(--text-color), -23px 0 0 var(--text-color), 15px 15px 0 var(--text-color), -15px 15px 0 var(--text-color), 15px -15px 0 var(--text-color), -15px -15px 0 var(--text-color);
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+.day-night input:checked + div {
+  box-shadow: inset 20px -20px 0 0 var(--text-color);
+  transform: scale(0.5) rotate(0deg);
+  transition: transform 0.3s ease 0.1s, box-shadow 0.2s ease 0s;
+}
+.day-night input:checked + div:before {
+  background: var(--text-color);
+  transition: background-color 0.3s ease 0.1s;
+}
+.day-night input:checked + div:after {
+  transform: scale(1);
+  transition: transform 0.5s ease 0.15s;
+}
+
+* {
+  box-sizing: inherit;
+}
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+body:before {
+  content: "";
+  position: absolute;
+  inset: 0 -60% 65% -60%;
+  background-image: radial-gradient(ellipse at top, #10B981 0%, var(--background-color) 50%);
+  opacity: var(--blur-opacity);
+}
+body .twitter {
+  position: fixed;
+  display: block;
+  right: 12px;
+  bottom: 12px;
+}
+body .twitter svg {
+  width: 32px;
+  height: 32px;
+  fill: #fff;
+}
+  </style>
