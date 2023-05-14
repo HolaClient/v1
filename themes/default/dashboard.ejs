@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  </head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      font-family: poppins;
+    }
+    </style>
+   <body style="font-size: poppins; background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./components/nav') %>
+    <%- include('./components/alert') %>
+    <br>
+            <% if (req.query.err == "ALREADY_OPEN") { %>
+                <div class="alert">
+                	You can't open multiple tabs!
+            	</div>
+            <% } else if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+              <div class="alert" style="background-color: #c3cace; border-radius: 15px;">
+                You need at least <%= settings.renewals.cost %> coins to renew your server!
+            </div>
+            <% } if (req.query.success === 'RENEWED') { %>
+              <div class="alert" style="background-color: #c3cace; border-radius: 15px;">
+                Succesfully renewed the server!
+            </div>
+            <% } if (req.session.newaccount || req.session.password) { %>
+            <div style="background-color: #1b1c1d; border-radius: 15px" class="alert">
+                <% if (req.session.newaccount) { %>
+                    <bold style="color:white">Welcome! to <%= settings.name%></bold><br>
+                <% } %>
+                <% if (req.session.password) { %>
+                  <bold style="color:white">Your panel password is <%= req.session.password %>.</bold>
+                <% } else { %>
+                  <bold style="color:white">Please head over to Settings to create a password.</bold>
+                <% } %>
+            </div>
+        <% } %>
+        <% if (req.query.err) { %>
+          <% if (req.query.err !== "none") { %>
+            <div class="alert" style="background-color: transparent; border-radius: 15px; color: white;">
+            <% if (req.query.err == "CREATEDSERVER") { %>
+              <i style="color:greenyellow" class="bi bi-check2-circle"></i> Success! Your server has been created
+            <% } %>
+            <% if (req.query.err == "DELETEDSERVER") { %>
+              <i style="color:greenyellow" class="bi bi-check2-circle"></i> Success! Your server has been deleted
+            <% } %>
+            <% if (req.query.err == "MODIFYSERVER") { %>
+              <i style="color:greenyellow" class="bi bi-check2-circle"></i>Success! Your server resources have been changed
+            <% } %>
+            </div>
+          <% } %>
+        <% } %>
+    <br>
+    <center>
+    <h3 style="color:white">Your Resources</h3>
+    <br>
+    <%- include('./components/resources') %>
+    <br>
+    <h3 style="color:white">Your Servers</h3>
+    <br>
+    <%- include('./components/servers') %>
+  </center>
+</body>
+<footer>
+  <%- include('./components/footer') %>
+</footer>
+</html>

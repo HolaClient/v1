@@ -1,0 +1,87 @@
+ <div>
+   <div class="col-md-6 grid-margin stretch-card">
+     <div>
+       <div>
+       <form action="/buycoins" method="GET">
+            <div class="form-group">
+              <label style="color:white" for="Amount">Money Amount, $1 for <%= settings.stripe.coins %> coins:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="Amount" placeholder="2" name="amt">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputName1">First Name:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="form-control" id="InputName1" placeholder="Sam" name="fn">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputName2">Last Name:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="form-control" id="InputName2" placeholder="Clover" name="sn">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputNumber">Credit Card Number:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="form-control" id="InputNumber" name="number" placeholder="00000000000000">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputCVV">CVV:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="form-control" id="InputCVV" name="vrf" placeholder="069">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputExpir">Expiration Date:</label>
+              <center>
+              <div class="row mx-auto">
+                <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="datepicker_input form-control border-2" id="datepicker1" name="name" name="year" required placeholder="DD/MM/YYYY">
+              </div>
+              </center>
+             <br>
+              <button style="border-radius: 15px; padding: 8px; background-color: gray; color: white; border-color: transparent;" class="btn btn-primary btn-lg text-white" type="submit">・ Buy ・</button>
+              </form>
+              <br>
+              <br>
+              <h6 style="color:white">[<i style="color:rgba(235, 26, 26, 0.767)" class="bi bi-exclamation-triangle"></i>]<h6 style="color:rgba(235, 26, 26, 0.767)">Warning! HolaClient is not responsile for any misbehavior activities with your card. We use stripe to make your payments.</h6>
+          </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+<style>
+    section {
+    display: inline-block; 
+    width:200px; 
+    border:0px solid; 
+    color:white;
+    vertical-align:top
+  }
+  .form-floating > .bi-calendar-date + .datepicker_input + label {
+  padding-left: 3.5rem;
+  z-index: 3;
+}
+  </style>
+  <script>
+    /* Bootstrap 5 JS included */
+/* vanillajs-datepicker 1.1.4 JS included */
+
+const getDatePickerTitle = elem => {
+  // From the label or the aria-label
+  const label = elem.nextElementSibling;
+  let titleText = '';
+  if (label && label.tagName === 'LABEL') {
+    titleText = label.textContent;
+  } else {
+    titleText = elem.getAttribute('aria-label') || '';
+  }
+  return titleText;
+}
+
+const elems = document.querySelectorAll('.datepicker_input');
+for (const elem of elems) {
+  const datepicker = new Datepicker(elem, {
+    'format': 'dd/mm/yyyy', // UK format
+    title: getDatePickerTitle(elem)
+  });
+}
+  </script>
+      <script src="/assets/vendors/select2/select2.min.js"></script>
+      <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+      <script src="/assets/js/file-upload.js"></script>
+      <script src="/assets/js/typeahead.js"></script>
+      <script src="/assets/js/select2.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js" integrity="sha512-iJh0F10blr9SC3d0Ow1ZKHi9kt12NYa+ISlmCdlCdNZzFwjH1JppRTeAnypvUez01HroZhAmP4ro4AvZ/rG0UQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

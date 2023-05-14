@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+<% if (req.query.err) { %>
+    <div style="border-radius: 15px; color:white" class="alert">
+                    <% if (req.query.err == "MISSINGCOUPONCODE") { %>
+                        <i style="color:red" class="bi bi-exclamation-octagon"></i> You have to fill in a coupon code first!
+                    <% } else if (req.query.err == "INVALIDCOUPONCODE") { %>
+                        <i style="color:red" class="bi bi-exclamation-octagon"></i> This doesn't seem to work. Check if it's redeemed already!
+                    <% } else if (req.query.err == "SUCCESSCOUPONCODE") { %>
+                        <i style="color:greenyellow" class="bi bi-check2-circle"></i> Success!
+                    <% } else { %>
+                        Coupon failure.
+                    <% } %>
+                    </div>
+                <% } %>
+    <div>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div>
+          <div>
+                            <form action="/coupon_redeem">
+                                   <label style="color:white" for="code">Code:</label>
+                                    <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="text" class="form-control" placeholder="Enter your coupon code here" name="code">
+                                    <br>
+                                    <button style="background-color: gray; color:white" class="btn btn-lg">Redeem</button>
+                            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="../../assets/vendors/select2/select2.min.js"></script>
+<script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script>
+async function submitNew() {
+let name = encodeURIComponent(document.getElementById("InputName").value);
+let egg = encodeURIComponent(document.getElementById("InputEgg").value);
+let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+let location = encodeURIComponent(document.getElementById("InputLoc").value);
+document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram}&disk=${disk}&cpu=${cpu}&location=${location}`;
+};
+</script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/misc.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>

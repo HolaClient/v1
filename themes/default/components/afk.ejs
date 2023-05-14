@@ -1,0 +1,10 @@
+<script>
+    let balance = document.getElementById("balance")
+    balance.textContent = Math.floor(<%= coins %> * 100) / 100
+  </script>
+<p style="color:white">Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %></p>
+<p id="balance" style="color:white">You have <% if (coins !== 1) { %><%= coins %> coins<% } else { %>coin<% } %></p>
+<span id="balance"></span>
+                  <script>
+                <%- arcioafktext %>
+            </script>

@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+<center>
+  <div>
+    <div>
+        <div>
+        <div class="card-body" style="display: none;" id="generate-panel">
+          <p style="color:white">You will get <%= settings.linkvertise.coins%> coins after you succesfully complete a linkvertise link!<br>
+            <a style="color:white" class="nav-link active" onclick="generate()">
+                <div style="color:white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                        <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                        <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                      </svg>
+                </div>
+                Generate Link
+              </a></p>
+                          </div>
+        <div class="card-body" id="loading-panel">
+          <h3 style="color:white">Fetching...</h3>
+        </div>    
+        <script type="text/javascript">
+          const loadingPanel = document.getElementById('loading-panel')
+          fetch(`/api/lvcooldown`).then(res => res.json())
+          .then(json => {
+            if (json.cooldown === null) {
+              const genPanel = document.getElementById('generate-panel')
+              loadingPanel.style.display = 'none'
+              return genPanel.style.display = ''
+            } else if (json.dailyLimit) {
+              const dailyPanel = document.getElementById('dailylimit-panel')
+              dailyPanel.style.display = ''
+              loadingPanel.style.display = 'none'
+              const timeLeft = document.getElementById('daily-timeleft')
+              timeLeft.innerHTML = json.readable
+            } else if (json.error) {
+              const errorPanel = document.getElementById('error-panel')
+              loadingPanel.style.display = 'none'
+              errorPanel.style.display = ''
+            } else {
+              loadingPanel.style.display = 'none'
+              const cooldownPanel = document.getElementById('cooldown-panel')
+              const cooldownTimer = document.getElementById('cooldown-seconds')
+
+              setInterval(() => {
+                const timeLeft = json.cooldown - Date.now()
+                if (timeLeft < 0) return window.location.replace('/earn')
+                cooldownTimer.innerHTML = Math.floor(timeLeft / 1000)
+              }, 1000)
+
+              cooldownPanel.style.display = ''
+            }
+          })
+          .catch(() => {
+            loadingPanel.style.display = 'none'
+            const errorPanel = document.getElementById('error-panel')
+            errorPanel.style.display = ''
+          })
+        </script>
+      <script type="text/javascript">
+        function generate() {
+          window.location.replace(`/earn/gen`)
+        }
+      </script>
+  </div>
+</div>
+</div></div>
+</center>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./components/nav') %>
+    <%- include('./components/alert') %>
+    <% if (req.query.err) { %>
+        <div style="border-radius: 15px; color:white;" class="alert">
+            <% if (req.query.err == "MISSINGVARIABLE") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> You have not filled out all of the server information.
+            <% } else if (req.query.err == "NOTANUMBER") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> RAM, disk and CPU must be a number.
+            <% } else if (req.query.err == "ERRORONCREATE") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> The panel does not have enough space to create this server!.
+            <% } else if (req.query.err == "BIGSERVERNAME") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> Your server name must be less than <b>191</b> characters.
+            <% } else if (req.query.err == "TOOMUCHSERVERS") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> So much servers
+            <% } else if (req.query.err == "PREMIUMLOCATION") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> Please select a location.
+            <% } else if (req.query.err == "TOOLITTLECOINS") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> You do not have enough coins to create a server
+            <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> You must complete the captcha to prove you are human!
+            <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> You submitted an invalid captcha response, try again.
+            <% } else { %>
+                <% if (req.query.num) { %>
+                    <% if (!isNaN(parseFloat(req.query.num))) { %>
+                        <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
+                            <i style="color:red" class="bi bi-exclamation-triangle"></i>  You must make a server with at least <b><%= req.query.num %></b>
+                            <% if (req.query.err.slice(-3) == "RAM") { %>
+                                MB RAM
+                            <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                MB disk
+                            <% } else { // CPU %>
+                                % CPU
+                            <% } %>
+                            <i style="color:red" class="bi bi-exclamation-triangle"></i> if you want to create a server with the server type you have selected.
+                        <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
+                            <i style="color:red" class="bi bi-exclamation-triangle"></i> With the selected server type, you can have a maximum of <b><%= req.query.num %></b>
+                            <% if (req.query.err.slice(-3) == "RAM") { %>
+                                MB RAM
+                            <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                MB disk
+                            <% } else { // CPU %>
+                                % CPU
+                            <% } %>
+                            on the server.
+                        <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
+                            <i style="color:red" class="bi bi-exclamation-triangle"></i> You don't have enough resources to make this server.
+                        <% } else { %>
+                            <i style="color:red" class="bi bi-exclamation-triangle"></i> Your modification wont work here!
+                        <% } %>
+                    <% } else { %>
+                        <i style="color:red" class="bi bi-exclamation-triangle"></i> Your modification wont work here!
+                    <% } %>
+                <% } else { %>
+                    <i style="color:red" class="bi bi-exclamation-triangle"></i> Invalid Locaton! Contact <%= settings.name %>'s staff
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+    <br>
+    <center>
+        <%- include('./components/create') %>
+        </center>
+</body>
+<footer>
+    <%- include('./components/footer') %>
+</footer>
+</html>

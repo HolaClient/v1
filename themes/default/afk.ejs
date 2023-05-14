@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./components/nav') %>
+    <%- include('./components/alert') %>
+    <br>
+            
+    <br>
+    <center>
+        <h2 style="color:white">AFK PAGE</h2>
+        <%- include('./components/afk') %>
+</center>
+    
+</body>
+<footer>
+  <%- include('./components/footer') %>
+</footer>
+</html>

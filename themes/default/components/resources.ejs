@@ -1,0 +1,217 @@
+<link rel="stylesheet" href="/assets/css/tailwind.css">
+<div class="row">
+  <%
+    let ram = 0;
+    let disk = 0;
+    let cpu = 0;
+    let servers = pterodactyl.relationships.servers.data.length;
+    for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+        ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+        disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+        cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+    }
+  %>
+          <% if (req.query.err) { %>
+<div class="modal">
+
+<!-- Modal content -->
+<div class="modal-content">
+<center>
+<img style="width: 140px; height:140px; box-shadow: none;" src="https://cdn.discordapp.com/attachments/987734229469253674/1007245670811439174/Copy_of_untitled_22.png" height=140 width=140><br><br><br>
+<h2 style="color: white;">Uh oh!</h2>
+<h4 style="color: #6c757d;">The server could not be created, the API responded with the following error:</h4>
+<code style="color: #6c757d;">
+              <% if (req.query.err == "MISSINGVARIABLE") { %>
+                  invalid server info
+              <% } else if (req.query.err == "NOTANUMBER") { %>
+                  resources must be numbers
+              <% } else if (req.query.err == "ERRORONCREATE") { %>
+                  insufficient region capacity
+              <% } else if (req.query.err == "BIGSERVERNAME") { %>
+                  server name too long
+              <% } else if (req.query.err == "TOOMUCHSERVERS") { %>
+                  reached server limit
+              <% } else if (req.query.err == "PREMIUMLOCATION") { %>
+                  plan cannot access this location
+              <% } else if (req.query.err == "TOOLITTLECOINS") { %>
+                  backend issue
+              <% } else { %>
+                  <% if (req.query.num) { %>
+                      <% if (!isNaN(parseFloat(req.query.num))) { %>
+                          <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
+                              software requries <b><%= req.query.num %></b>
+                              <% if (req.query.err.slice(-3) == "RAM") { %>
+                                  MB RAM
+                              <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                  MB disk
+                              <% } else { // CPU %>
+                                  % CPU
+                              <% } %>
+                          <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
+                              software type allows up to <b><%= req.query.num %></b>
+                              <% if (req.query.err.slice(-3) == "RAM") { %>
+                                  MB RAM
+                              <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                                  MB disk
+                              <% } else { // CPU %>
+                                  % CPU
+                              <% } %>
+                          <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
+                              insufficient resource balance
+                          <% } else { %>
+                              I won't mind to add a little easter egg here. :)
+                          <% } %>
+                      <% } else { %>
+                          I won't mind to add a little easter egg here. :)
+                      <% } %>
+                  <% } else { %>
+                      I won't mind to add a little easter egg here. :)
+                  <% } %>
+              <% } %>
+       </code>
+<br><br>
+<a href="../servers/new" style="background-color: rgba(165, 165, 165, 0.315); border: none;" class="btn btn-secondary">Close</a>
+</div></center>
+
+</div>
+      <% } %>
+<style>
+body {font-family: poppins;}
+
+/* The Modal (background) */
+.modal {
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 100px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgba(165, 165, 165, 0.315); /* Fallback color */
+background-color: rgba(165, 165, 165, 0.315); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+background-color: #2b2b2d;
+border-radius: 5px;
+margin: auto;
+padding: 20px;
+border: 3px solid #38383b;
+width: 600px;
+animation: fadeInAnimation ease 0.8s;
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
+}
+
+      @keyframes fadeInAnimation {
+          0% {
+              opacity: 0;
+          }
+          100% {
+              opacity: 1;
+          }
+      }
+
+/* The Close Button */
+.close {
+color: #aaaaaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: #000;
+text-decoration: none;
+cursor: pointer;
+}
+</style>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div style="background-color: rgba(165, 165, 165, 0.315); border: 3px solid transparent;" class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <h6 class="card-title text-uppercase text-white mb-0">YOUR CPU</h6>
+            <div class="d-flex align-items-center align-self-start">
+              <h2 id="nbr" style="color: white;" class="text-bold mb-0"><%= cpu %> / <%= packages.cpu + extraresources.cpu %>%</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div style="background-color: rgba(165, 165, 165, 0.315); border: 3px solid transparent;" class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <h6 class="card-title text-uppercase text-white mb-0">YOUR RAM</h5>
+            <div class="d-flex align-items-center align-self-start">
+              <h3 style="color: white;" class="mb-0"><%= ram %> / <%= packages.ram + extraresources.ram %>MB</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div style="background-color: rgba(165, 165, 165, 0.315); border: 3px solid transparent;" class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <h6 class="card-title text-uppercase text-white mb-0">YOUR DISK</h5>
+            <div class="d-flex align-items-center align-self-start">
+              <h3 style="color: white;" class="mb-0"><%= disk %> / <%= packages.disk + extraresources.disk %>MB</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+    <div style="background-color: rgba(165, 165, 165, 0.315); border: 3px solid transparent;" class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <h5 class="card-title text-uppercase text-white mb-0">YOUR SLOTS</h5>
+            <div class="d-flex align-items-center align-self-start">
+              <h3 style="color: white;" class="mb-0"><%= servers %> / <%= packages.servers + extraresources.servers %></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var speed = 10;
+
+/* Call this function with a string containing the ID name to
+* the element containing the number you want to do a count animation on.*/
+function incEltNbr(id) {
+elt = document.getElementById(id);
+endNbr = Number(document.getElementById(id).innerHTML);
+incNbrRec(0, endNbr, elt);
+}
+
+/*A recursive function to increase the number.*/
+function incNbrRec(i, endNbr, elt) {
+if (i <= endNbr) {
+  elt.innerHTML = i;
+  setTimeout(function() {//Delay a bit before calling the function again.
+    incNbrRec(i + 1, endNbr, elt);
+  }, speed);
+}
+}
+
+/*Function called on button click*/
+function incNbr(){
+incEltNbr("nbr");
+}
+
+incEltNbr("nbr"); /*Call this funtion with the ID-name for that element to increase the number within*/
+
+</script>

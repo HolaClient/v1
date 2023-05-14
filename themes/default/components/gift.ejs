@@ -1,0 +1,111 @@
+<% if (req.query.err) { %>
+    <div style="border-radius: 15px; color:white" class="alert">
+      <% if (req.query.err == "MISSINGFIELDS") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> Fill all fields!
+      <% } else if (req.query.err == "CANNOTGIFTYOURSELF") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> You tried to gift yourself!
+      <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> GO COMPLETE THE CAPTCHA,YOU NPC!
+      <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> FBI OPEN UP! Incorrect captcha!
+      <% } else if (req.query.err == "CANTAFFORD") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> You do not have enough coins! :/
+      <% } else if (req.query.err == "USERDOESNTEXIST") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> ERROR: UserID not found!
+      <% } else if (req.query.err == "TOOLOWCOINS") { %>
+        <i style="color:red" class="bi bi-exclamation-octagon"></i> You must gift more than 1 coin!
+      <% } %>
+    </div>
+  <% } else if (req.query.success) { %>
+    <div class="alert" style="background-color: transparent; border-radius: 15px">
+      <i style="color:greenyellow" class="bi bi-check2-circle"></i> Success! The coins have been transferred
+    </div>
+  <% } %>
+  <center>
+  <div>
+    <div class="col-md-6 grid-margin stretch-card">
+      <div>
+        <div>
+          <form class="forms-sample">
+            <div class="form-group">
+              <label style="color:white" for="InputID">Discord ID</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputID" placeholder="Enter the Discord ID of the user you are gifting to here">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputCoins">Coins:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputCoins" placeholder="100">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputCPU">CPU (In Percentage "%"):</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputCPU" placeholder="100">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputRAM">RAM (<% if (settings.resources.type == "GB") { %>In GB<% } else { %>In MBs<% } %>):</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputRAM" placeholder="<% if (settings.resources.type == "GB") { %>2<% } else { %>2048<% } %>">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputDisk">Disk (<% if (settings.resources.type == "GB") { %>In GBs<% } else { %>In MB<% } %>):</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputDisk" placeholder="<% if (settings.resources.type == "GB") { %>10<% } else { %>10240<% } %>">
+            </div>
+            <div class="form-group">
+              <label style="color:white" for="InputDisk">Servers:</label>
+              <input style="border-radius: 15px; padding: 8px; background-color: rgba(165, 165, 165, 0.315); color: white; border-color: transparent;" type="number" class="form-control" id="InputServers" placeholder="2">
+            </div>
+            <br>
+           <a role="button" style="background-color: gray; color:white" class="btn btn-lg" onclick="submitGift()" href="javascript: submitGift()">Gift</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script>
+  async function submitGift() {
+    let id = encodeURIComponent(document.getElementById("InputID").value);
+    let coins = encodeURIComponent(document.getElementById("InputCoins").value);
+    document.location.href = `/giftcoins?id=${id}&coins=${coins}`;
+    let id = encodeURIComponent(document.getElementById("InputID").value);
+    <% if (settings.resources.type == "GB") { %>
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value * 1024);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value * 1024);
+    <% } else { %>
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+    <% } %>
+    let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+    let servers = encodeURIComponent(document.getElementById("InputServers").value);
+    document.location.href = `/giftres?id=${id}&ram=${ram}&disk=${disk}&cpu=${cpu}&servers=${servers}`;
+  };
+</script>
+<script>
+  function submitGift() {
+    let id = encodeURIComponent(document.getElementById("InputID").value);
+    let coins = encodeURIComponent(document.getElementById("InputCoins").value);
+    document.location.href = `/giftcoins?id=${id}&coins=${coins}`;
+    let id = encodeURIComponent(document.getElementById("InputID").value);
+    <% if (settings.resources.type == "GB") { %>
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value * 1024);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value * 1024);
+    <% } else { %>
+      let ram = encodeURIComponent(document.getElementById("InputRAM").value);
+      let disk = encodeURIComponent(document.getElementById("InputDisk").value);
+    <% } %>
+    let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+    let servers = encodeURIComponent(document.getElementById("InputServers").value);
+    document.location.href = `/giftres?id=${id}&ram=${ram}&disk=${disk}&cpu=${cpu}&servers=${servers}`;
+  };
+</script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
+</center>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>

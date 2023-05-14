@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./components/head') %>
+</head>
+<style>
+  body {
+    background-image: url('<%= settings.background %>');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+  </style>
+ <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+  <%- include('./components/anav') %>
+  <%- include('./components/alert') %>
+  <% if (req.query.err) { %>
+    <% if (req.query.err !== "none") { %>
+      <div style="border-radius: 15px; color: white;" class="alert">
+        <% if (req.query.err == "MISSINGID") { %>
+            You have not provided the Discord user ID.
+          <% } else if (req.query.err == "CREATECOUPONINVALIDCHARACTERS") { %>
+          One of the characters you entered in coupon creation was invalid, please try again.
+          <% } else if (req.query.err == "REVOKECOUPONCANNOTFINDCODE") { %>
+          One of the characters you entered in coupon revoke was invalid, please try again.
+          <% } else if (req.query.err == "CREATECOUPONEMPTY") { %>
+          While creating your coupon you did not specify to give any resources or coins.
+          <% } else if (req.query.err == "CREATECOUPONLESSTHANONE") { %>
+          While creating your coupon you tried to give less then one in RAM, DISK, CPU and/or coins.
+        <% } else if (req.query.err == "INVALIDID") { %>
+            You have provided a Discord user ID that does not exist, or has not signed up on the dashboard.
+        <% } else if (req.query.err == "MISSINGVARIABLES") { %>
+            You have not provided either ram, disk, cpu, and/or servers.
+        <% } else if (req.query.err == "RAMSIZE" || req.query.err == "DISKSIZE" || req.query.err == "CPUSIZE" || req.query.err == "SERVERSIZE") { %>
+            The RAM, disk, CPU and servers number cannot be less than 0 and must be above 999999999999999.
+        <% } else { %>
+            :skull: Abuser found! reporting it to owner.
+        <% } %>
+      </div>
+    <% } else if (req.query.err == "none") { %>
+      <div class="alert" style="background-color: transparent; border-radius: 15px;">
+        Success! completed
+      </div>
+    <% } %>
+  <% } %>
+          <% if (req.query.code) { %>
+          <div class="alert" style="background-color: transparent; border-radius: 15px;">
+          Success! You have created <%= req.query.code %> coupon
+          </div>
+          <% } %>
+  <center>
+  <%- include('./components/aresources') %>
+  </center>
+</body>
+</html>
+

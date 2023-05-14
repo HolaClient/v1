@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./components/head') %>
+</head>
+<style>
+  body {
+    background-image: url('<%= settings.background %>');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+  </style>
+ <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+  <%- include('./components/anav') %>
+  <center>
+  <%- include('./components/alert') %>
+  <% if (req.query.err) { %>
+    <% if (req.query.err !== "none") { %>
+      <div style="border-radius: 15px; color: white;" class="alert">
+        <% if (req.query.err == "MISSINGID") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> Please fill in the correct Discord user ID
+          <% } else if (req.query.err == "CREATECOUPONINVALIDCHARACTERS") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> Invalid characters has been found in your coupon code, please change it!
+          <% } else if (req.query.err == "REVOKECOUPONCANNOTFINDCODE") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> Couldn't find that coupon in our database!
+          <% } else if (req.query.err == "CREATECOUPONEMPTY") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> Please specify at least one field to create a coupon with!
+          <% } else if (req.query.err == "CREATECOUPONLESSTHANONE") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> We don't support coupon creation with resources less than 1!
+        <% } else if (req.query.err == "INVALIDID") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> Make sure this user is signedup on this Dashboard or check if the ID belongs to a valid person!
+        <% } else if (req.query.err == "MISSINGVARIABLES") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> No value has been given, coupon creation failed!
+        <% } else if (req.query.err == "RAMSIZE" || req.query.err == "DISKSIZE" || req.query.err == "CPUSIZE" || req.query.err == "SERVERSIZE") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> We don't support coupon creation with resources less than 1!
+        <% } else { %>
+            :skull: Abuser found! reporting it to owner, jk
+        <% } %>
+      </div>
+    <% } else if (req.query.err == "none") { %>
+      <div class="alert" style="background-color: transparent; border-radius: 15px; color:white">
+        Coupon has been created successfully!
+      </div>
+    <% } %>
+  <% } %>
+          <% if (req.query.code) { %>
+          <div class="alert" style="background-color: transparent; border-radius: 15px; color:white">
+          Success! Use "<%= req.query.code %>" in the redeem page!
+          </div>
+          <% } %>
+          <hr>
+  </center>
+  <center>
+  <%- include('./components/acoupons') %>
+  </center>
+</body>
+</html>
+

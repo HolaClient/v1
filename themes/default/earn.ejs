@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+</head>
+<style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: poppins;
+      background-size: 100% 100%;
+    }
+    </style>
+   <body style="background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+    <%- include('./components/nav') %>
+    <%- include('./components/alert') %>
+    <br>
+    <div class="card-body" id="error-panel" style="display: none;">
+        <h3 style="color:white">An error occured! Refresh the page and try again</h3>
+      </div>
+      <div class="card-body" id="cooldown-panel" style="display: none;">
+        
+          <h3 style="color:white">You are on cooldown before you can complete another linkvertise link!</h3>
+          <p style="color:white">Please wait <span style="color:white" id="cooldown-seconds"></span> seconds before you can complete another link.</p>
+        
+      </div>
+      <div class="card-body" id="dailylimit-panel" style="display: none;">
+        
+          <h3 style="color:white">You have reached the maximum number of links you can complete today!</h3>
+          <p style="color:white">You can complete more after <span style="color:white" id="daily-timeleft"></span>.</p>
+        
+      </div>
+      <% if (req.query.err) { %>
+        <div style="border-radius: 15px;" class="alert">
+            <% if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+                <i style="color:red" class="bi bi-exclamation-triangle"></i> You must complete the captcha to prove you are human!
+          <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+            <i style="color:red" class="bi bi-exclamation-triangle"></i> You submitted an invalid captcha response, try again.
+          <% } %>
+        </div>
+      <% } %>
+      <% if (req.query.success) { %>
+        <div class="alert" style="background-color: transparent; color: white; border-radius: 15px;">
+            <i style="color:rgb(52, 243, 109)" class="bi bi-check2-circle"></i> You successfully earned <%= settings.linkvertise.coins%> coins by completing a Linkvertise link!
+      </div>
+      <% } %>
+    <br>
+    <center>
+        <h2 style="color:white"><b>J4R</b></h2>
+        <%- include('./components/j4r') %>
+        <br>
+        <% if (settings.linkvertise.enabled == true) { %>
+        <h2 style="color:white"><b>Linkvertise</b></h2>
+        <%- include('./components/lv') %>
+        <% } %>
+</center>
+    
+</body>
+<footer>
+  <%- include('./components/footer') %>
+</footer>
+</html>

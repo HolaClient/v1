@@ -1,0 +1,147 @@
+
+    <% if (req.query.err) { %>
+        <% if (req.query.err !== "none") { %>
+          <div style="border-radius: 15px;" class="alert">
+            <% if (req.query.err == "") { %>
+              Insufficient Coins!
+            <% } else if (req.query.err == "MAXCPUEXCEETED") { %>
+                <i style="color:red" class="bi bi-exclamation-octagon"></i> You have entered a value that is greater than the limit set by an admin!
+            <% } else if (req.query.err == "MAXRAMEXCEETED") { %>
+                <i style="color:red" class="bi bi-exclamation-octagon"></i> You have entered a value that is greater than the limit set by an admin!
+            <% } else if (req.query.err == "MAXDISKEXCEETED") { %>
+                <i style="color:red" class="bi bi-exclamation-octagon"></i> You have entered a value that is greater than the limit set by an admin!
+            <% } else if (req.query.err == "MAXSERVERSEXCEETED") { %>
+                <i style="color:red" class="bi bi-exclamation-octagon"></i> You have entered a value that is greater than the limit set by an admin!
+            <% } %>
+          </div>
+        <% } else if (req.query.err == "none") { %>
+          <div class="alert" style="background-color: transparent; border-radius: 15px;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <i style="color:greenyellow" class="bi bi-check2-circle"></i> Success!
+          </div>
+        <% } %>
+      <% } %>
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div>
+        <div>
+          <form class="forms-sample" action="/buycpu">
+            <div class="form-group">
+              <label style="font-weight: bold; color: white;">CPU:</label><BR>
+              <select name="amount" id="cpuAmount" class="form-control" style="border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                <option style="background-color: gray" value=1><%= settings.api.client.coins.store.cpu.per %>% CPU - <%= settings.api.client.coins.store.cpu.cost %> coins</option>
+                <option style="background-color: gray" value=2><%= settings.api.client.coins.store.cpu.per * 2 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 2 %> coins</option>
+                <option style="background-color: gray" value=3><%= settings.api.client.coins.store.cpu.per * 3 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 3 %> coins</option>
+                <option style="background-color: gray" value=4><%= settings.api.client.coins.store.cpu.per * 4 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 4 %> coins</option>
+                <option style="background-color: gray" value=5><%= settings.api.client.coins.store.cpu.per * 5 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 5 %> coins</option>
+                <option style="background-color: gray" value=6><%= settings.api.client.coins.store.cpu.per * 6 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 6 %> coins</option>
+                <option style="background-color: gray" value=7><%= settings.api.client.coins.store.cpu.per * 7 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 7 %> coins</option>
+              </select>
+            </div><br>
+            <a class="button" style="border-radius: 15px; border-color: aquamarine; color: white;" href="javascript: buyCPU()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy CPU</span></a><br><br>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+      <div>
+        <div>
+          <form class="forms-sample" action="/buyram">
+            <div class="form-group">
+              <label style="font-weight: bold; color: white;">RAM:</label><BR>
+              <select id="ramAmount" class="form-control" style="border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                <option style="background-color: gray" value=1><%= settings.api.client.coins.store.ram.per %>MB RAM - <%= settings.api.client.coins.store.ram.cost %> coins</option>
+                <option style="background-color: gray" value=2><%= settings.api.client.coins.store.ram.per * 2 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 2 %> coins</option>
+                <option style="background-color: gray" value=3><%= settings.api.client.coins.store.ram.per * 3 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 3 %> coins</option>
+                <option style="background-color: gray" value=4><%= settings.api.client.coins.store.ram.per * 4 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 4 %> coins</option>
+                <option style="background-color: gray" value=5><%= settings.api.client.coins.store.ram.per * 5 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 5 %> coins</option>
+                <option style="background-color: gray" value=6><%= settings.api.client.coins.store.ram.per * 6 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 6 %> coins</option>
+                <option style="background-color: gray" value=7><%= settings.api.client.coins.store.ram.per * 7 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 7 %> coins</option>
+              </select>
+            </div><br>
+            <a class="button" style="color: white;" href="javascript: buyRAM()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy RAM</span></a><br><br>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+      <div>
+        <div>
+          <form class="forms-sample" action="/buydisk">
+            <div class="form-group">
+              <label style="font-weight: bold; color: white;">Disk:</label><BR>
+              <select id="diskAmount" class="form-control" style="border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                <option style="background-color: gray" value=1><%= settings.api.client.coins.store.disk.per %>MB Disk - <%= settings.api.client.coins.store.disk.cost %> coins</option>
+                <option style="background-color: gray" value=2><%= settings.api.client.coins.store.disk.per * 2 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 2 %> coins</option>
+                <option style="background-color: gray" value=3><%= settings.api.client.coins.store.disk.per * 3 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 3 %> coins</option>
+                <option style="background-color: gray" value=4><%= settings.api.client.coins.store.disk.per * 4 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 4 %> coins</option>
+                <option style="background-color: gray" value=5><%= settings.api.client.coins.store.disk.per * 5 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 5 %> coins</option>
+                <option style="background-color: gray" value=6><%= settings.api.client.coins.store.disk.per * 6 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 6 %> coins</option>
+                <option style="background-color: gray" value=7><%= settings.api.client.coins.store.disk.per * 7 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 7 %> coins</option>
+              </select>
+            </div><br>
+            <a class="button" style="color: white;" href="javascript: buyDisk()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy DISK</span></a><br><br>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card">
+      <div>
+        <div>
+          <form class="forms-sample" action="/buyservers">
+            <div class="form-group">
+              <label style="font-weight: bold; color: white;">Servers:</label><BR>
+              <select id="serversAmount" class="form-control" style="border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                <option style="background-color: gray" value=1><%= settings.api.client.coins.store.servers.per %> Server - <%= settings.api.client.coins.store.servers.cost %> coins</option>
+                <option style="background-color: gray" value=2><%= settings.api.client.coins.store.servers.per * 2 %> Servers - <%= settings.api.client.coins.store.servers.cost * 2 %> coins</option>
+                <option style="background-color: gray" value=3><%= settings.api.client.coins.store.servers.per * 3 %> Servers - <%= settings.api.client.coins.store.servers.cost * 3 %> coins</option>
+                <option style="background-color: gray" value=4><%= settings.api.client.coins.store.servers.per * 4 %> Servers - <%= settings.api.client.coins.store.servers.cost * 4 %> coins</option>
+                <option style="background-color: gray" value=5><%= settings.api.client.coins.store.servers.per * 5 %> Servers - <%= settings.api.client.coins.store.servers.cost * 5 %> coins</option>
+                <option style="background-color: gray" value=6><%= settings.api.client.coins.store.servers.per * 6 %> Servers - <%= settings.api.client.coins.store.servers.cost * 6 %> coins</option>
+                <option style="background-color: gray" value=7><%= settings.api.client.coins.store.servers.per * 7 %> Servers - <%= settings.api.client.coins.store.servers.cost * 7 %> coins</option>
+              </select>
+            </div><br>
+            <a class="button" style="color: white;" href="javascript: buyServers()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy SERVER SLOTS</span></a><br><br>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- content-wrapper ends -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- Plugin js for this page -->
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script>
+async function buyCPU() {
+let cpu = encodeURIComponent(document.getElementById("cpuAmount").value);
+document.location.href = `/buycpu?amount=${cpu}`;
+};
+
+async function buyRAM() {
+let ram = encodeURIComponent(document.getElementById("ramAmount").value);
+document.location.href = `/buyram?amount=${ram}`;
+};
+
+async function buyDisk() {
+let disk = encodeURIComponent(document.getElementById("diskAmount").value);
+document.location.href = `/buydisk?amount=${disk}`;
+};
+
+async function buyServers() {
+let servers = encodeURIComponent(document.getElementById("serversAmount").value);
+document.location.href = `/buyservers?amount=${servers}`;
+};
+</script>
+<!-- End plugin js for this page --><!-- Custom js for this page -->
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
+<!-- End custom js for this page -->
+</body>
