@@ -1,0 +1,447 @@
+<head>
+  <%- include('./parts/head') %>
+    <!-- Vector CSS -->
+    <link href="../../../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+    <!-- simplebar CSS-->
+    <link href="../../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+    <!-- Bootstrap core CSS-->
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- animate CSS-->
+    <link href="../../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+    <!-- Icons CSS-->
+    <link href="../../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <!-- Sidebar CSS-->
+    <link href="../../../assets/css/sidebar-menu.css" rel="stylesheet"/>
+    <!-- Custom Style-->
+    <link href="../../../assets/css/app-style.css" rel="stylesheet"/>
+</head>
+<style>
+  body {
+    background-image: url('<%= settings.background %>');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: poppins;
+  }
+  </style>
+    <body>
+      <!-- Start wrapper-->
+ <div id="wrapper">
+  <%- include('./parts/sidebar') %>
+  <%- include('./parts/topnav') %>
+  <div class="clearfix"></div>
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!---- ALERTS ----->
+    <%- include('./parts/alert') %>
+    <br>
+    <% if (req.query.err) { %>
+      <div style="border-radius: 15px; color:white;" class="alert">
+          <% if (req.query.err == "MISSINGVARIABLE") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC1] You have not filled up all of the information, please fill up in order to create a server!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>            
+          <% } else if (req.query.err == "NOTANUMBER") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC2] RAM, CPU and DISK must be a number!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "ERRORONCREATE") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC3] The panel does not have enough space to create your server!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "BIGSERVERNAME") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC4] Your server's name cannot be more than 191 characters!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "TOOMUCHSERVERS") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC5] Too much servers!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "PREMIUMLOCATION") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC6] Please select a valid location!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "TOOLITTLECOINS") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC7] You do not have enough coins to create this server!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "CREATEDSERVER") { %>
+                  <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                      <strong id="servername">Successfully created a server.</strong>
+                      <button aria-hidden="true" class="close" type="button">&times;</button>
+                    </div>
+          <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC8] Please complete the captcha to prove you're a human!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                  <strong>[HCOC9] You didn't solve that captcha correctly, please try again!</strong>
+                  <button aria-hidden="true" class="close" type="button">&times;</button>
+                </div>
+          <% } else if (req.query.err == "CANNOTAFFORD") { %>
+                  <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                      <strong>[HCOC14] You do not have enough coins to buy this!</strong>
+                      <button aria-hidden="true" class="close" type="button">&times;</button>
+                    </div>
+          <% } else { %>
+              <% if (req.query.num) { %>
+                  <% if (!isNaN(parseFloat(req.query.num))) { %>
+                      <% if (req.query.err == "TOOLITTLERAM" || req.query.err == "TOOLITTLEDISK" || req.query.err == "TOOLITTLECPU") { %>
+                          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                              <strong>[HCOC10] You must make a server with at least <b><%= req.query.num %></b>!</strong>
+                              <button aria-hidden="true" class="close" type="button">&times;</button>
+                            </div>
+                          <% if (req.query.err.slice(-3) == "RAM") { %>
+                              MB RAM
+                          <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                              MB disk
+                          <% } else { // CPU %>
+                              % CPU
+                          <% } %>
+                          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                              <strong>if you want to create a server with the server type you have selected.</strong>
+                              <button aria-hidden="true" class="close" type="button">&times;</button>
+                            </div>
+                      <% } else if (req.query.err == "TOOMUCHRAM" || req.query.err == "TOOMUCHDISK" || req.query.err == "TOOMUCHCPU") { %>
+                          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                              <strong>[HCOC11] With the selected server type, you can have a maximum of <b><%= req.query.num %></b></strong>
+                              <button aria-hidden="true" class="close" type="button">&times;</button>
+                            </div>
+                          <% if (req.query.err.slice(-3) == "RAM") { %>
+                              MB RAM
+                          <% } else if (req.query.err.slice(-4) == "DISK") { %>
+                              MB disk
+                          <% } else { // CPU %>
+                              % CPU
+                          <% } %>
+                          on the server.
+                      <% } else if (req.query.err == "EXCEEDRAM" || req.query.err == "EXCEEDDISK" || req.query.err == "EXCEEDCPU") { %>
+                          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                              <strong>[HCOC12] You do not have enough resources to make this server!</strong>
+                              <button aria-hidden="true" class="close" type="button">&times;</button>
+                            </div>
+                      <% } else { %>
+                          <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                              <strong>[HCOC13] Aw man! Your modification won't work here.</strong>
+                              <button aria-hidden="true" class="close" type="button">&times;</button>
+                            </div>
+                      <% } %>
+                  <% } else { %>
+                      <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                          <strong>[HCOC14] Aw man! Your modification won't work here.</strong>
+                          <button aria-hidden="true" class="close" type="button">&times;</button>
+                        </div>
+                  <% } %>
+              <% } else { %>
+                  <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+                      <strong>Successfully added those resources to your account!</strong>
+                      <button aria-hidden="true" class="close" type="button">&times;</button>
+                    </div>
+              <% } %>
+          <% } %>
+      </div>
+  <% } %>
+      <%- include('./parts/resources') %>
+      <body className='snippet-body' style="font-size: poppins; background-color: #1b1c1d;" background="<%= settings.background %>"; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;>
+        <center>
+        <h1 id="register">Store</h1><br>
+        <div class="row">
+          <div class="col-md-6 grid-margin stretch-card">
+            <div>
+              <div>
+                <form class="forms-sample" action="/buycpu">
+                  <div class="form-group">
+                    <label style="font-weight: bold; color: white;">CPU:</label><BR>
+                    <select name="amount" id="cpuAmount" class="form-control" style="width: 250px; height: 50px; border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                      <option style="background-color: gray" value=1><%= settings.api.client.coins.store.cpu.per %>% CPU - <%= settings.api.client.coins.store.cpu.cost %> coins</option>
+                      <option style="background-color: gray" value=2><%= settings.api.client.coins.store.cpu.per * 2 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 2 %> coins</option>
+                      <option style="background-color: gray" value=3><%= settings.api.client.coins.store.cpu.per * 3 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 3 %> coins</option>
+                      <option style="background-color: gray" value=4><%= settings.api.client.coins.store.cpu.per * 4 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 4 %> coins</option>
+                      <option style="background-color: gray" value=5><%= settings.api.client.coins.store.cpu.per * 5 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 5 %> coins</option>
+                      <option style="background-color: gray" value=6><%= settings.api.client.coins.store.cpu.per * 6 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 6 %> coins</option>
+                      <option style="background-color: gray" value=7><%= settings.api.client.coins.store.cpu.per * 7 %>% CPU - <%= settings.api.client.coins.store.cpu.cost * 7 %> coins</option>
+                    </select>
+                  </div><br>
+                  <button class="button" style="width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" href="javascript: buyCPU()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy CPU</span></button><br><br>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 grid-margin stretch-card">
+            <div>
+              <div>
+                <form class="forms-sample" action="/buyram">
+                  <div class="form-group">
+                    <label style="font-weight: bold; color: white;">RAM:</label><BR>
+                    <select id="ramAmount" class="form-control" style="width: 250px; height: 50px; border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                      <option style="background-color: gray" value=1><%= settings.api.client.coins.store.ram.per %>MB RAM - <%= settings.api.client.coins.store.ram.cost %> coins</option>
+                      <option style="background-color: gray" value=2><%= settings.api.client.coins.store.ram.per * 2 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 2 %> coins</option>
+                      <option style="background-color: gray" value=3><%= settings.api.client.coins.store.ram.per * 3 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 3 %> coins</option>
+                      <option style="background-color: gray" value=4><%= settings.api.client.coins.store.ram.per * 4 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 4 %> coins</option>
+                      <option style="background-color: gray" value=5><%= settings.api.client.coins.store.ram.per * 5 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 5 %> coins</option>
+                      <option style="background-color: gray" value=6><%= settings.api.client.coins.store.ram.per * 6 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 6 %> coins</option>
+                      <option style="background-color: gray" value=7><%= settings.api.client.coins.store.ram.per * 7 %>MB RAM - <%= settings.api.client.coins.store.ram.cost * 7 %> coins</option>
+                    </select>
+                  </div><br>
+                  <button class="button" style="width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" href="javascript: buyRAM()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy RAM</span></button><br><br>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 grid-margin stretch-card">
+            <div>
+              <div>
+                <form class="forms-sample" action="/buydisk">
+                  <div class="form-group">
+                    <label style="font-weight: bold; color: white;">Disk:</label><BR>
+                    <select id="diskAmount" class="form-control" style="width: 250px; height: 50px; border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                      <option style="background-color: gray" value=1><%= settings.api.client.coins.store.disk.per %>MB Disk - <%= settings.api.client.coins.store.disk.cost %> coins</option>
+                      <option style="background-color: gray" value=2><%= settings.api.client.coins.store.disk.per * 2 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 2 %> coins</option>
+                      <option style="background-color: gray" value=3><%= settings.api.client.coins.store.disk.per * 3 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 3 %> coins</option>
+                      <option style="background-color: gray" value=4><%= settings.api.client.coins.store.disk.per * 4 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 4 %> coins</option>
+                      <option style="background-color: gray" value=5><%= settings.api.client.coins.store.disk.per * 5 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 5 %> coins</option>
+                      <option style="background-color: gray" value=6><%= settings.api.client.coins.store.disk.per * 6 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 6 %> coins</option>
+                      <option style="background-color: gray" value=7><%= settings.api.client.coins.store.disk.per * 7 %>MB Disk - <%= settings.api.client.coins.store.disk.cost * 7 %> coins</option>
+                    </select>
+                  </div><br>
+                  <button class="button" style="width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" href="javascript: buyDisk()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy DISK</span></button><br><br>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 grid-margin stretch-card">
+            <div>
+              <div>
+                <form class="forms-sample" action="/buyservers">
+                  <div class="form-group">
+                    <label style="font-weight: bold; color: white;">Servers:</label><BR>
+                    <select id="serversAmount" class="form-control" style="width: 250px; height: 50px; border-radius: 15px; padding: 8px; color: white; background-color: rgba(165, 165, 165, 0.315); border-color: transparent;">
+                      <option style="background-color: gray" value=1><%= settings.api.client.coins.store.servers.per %> Server - <%= settings.api.client.coins.store.servers.cost %> coins</option>
+                      <option style="background-color: gray" value=2><%= settings.api.client.coins.store.servers.per * 2 %> Servers - <%= settings.api.client.coins.store.servers.cost * 2 %> coins</option>
+                      <option style="background-color: gray" value=3><%= settings.api.client.coins.store.servers.per * 3 %> Servers - <%= settings.api.client.coins.store.servers.cost * 3 %> coins</option>
+                      <option style="background-color: gray" value=4><%= settings.api.client.coins.store.servers.per * 4 %> Servers - <%= settings.api.client.coins.store.servers.cost * 4 %> coins</option>
+                      <option style="background-color: gray" value=5><%= settings.api.client.coins.store.servers.per * 5 %> Servers - <%= settings.api.client.coins.store.servers.cost * 5 %> coins</option>
+                      <option style="background-color: gray" value=6><%= settings.api.client.coins.store.servers.per * 6 %> Servers - <%= settings.api.client.coins.store.servers.cost * 6 %> coins</option>
+                      <option style="background-color: gray" value=7><%= settings.api.client.coins.store.servers.per * 7 %> Servers - <%= settings.api.client.coins.store.servers.cost * 7 %> coins</option>
+                    </select>
+                  </div><br>
+                  <button class="button" style="width: 250px; border-radius: 15px; border-color: aquamarine; color: white;" href="javascript: buyServers()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Buy SERVER SLOTS</span></button><br><br>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      </div>
+      <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+      </div>
+    </center>
+      <style>::-webkit-scrollbar {
+          width: 8px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1; 
+        }
+         
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555; 
+        }
+
+#regForm {
+background-color: rgba(165, 165, 165, 0.315);
+margin: 0px auto;
+font-family: poppins;
+padding: 40px;
+border-radius: 15px
+}
+
+#register{
+
+color: #fff;
+}
+
+h1 {
+text-align: center
+}
+
+input {
+padding: 10px;
+width: 100%;
+font-size: 17px;
+font-family: poppins;
+border: 1px solid #aaaaaa;
+border-radius: 10px;
+}
+
+
+
+.tab input:focus{
+
+border:1px solid #70cff5 !important;
+outline: none;
+}
+
+input.invalid {
+
+border:1px solid #e03a0666;
+}
+
+.tab {
+display: none
+}
+
+button {
+background-color: #2f2e30;
+color: #ffffff;
+border: none;
+border-radius: 50%;
+padding: 10px 20px;
+font-size: 17px;
+font-family: poppins;
+cursor: pointer
+}
+
+button:hover {
+opacity: 0.8
+}
+
+button:focus{
+
+outline: none !important;
+}
+
+#prevBtn {
+background-color: #eeacac
+}
+
+
+.all-steps{
+text-align: center;
+margin-top: 30px;
+margin-bottom: 30px;
+width: 100%;
+display: inline-flex;
+justify-content: center;
+}
+
+.step {
+height: 40px;
+width: 40px;
+margin: 0 2px;
+background-color: #bbbbbb;
+border: none;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 15px;
+color: #2f2e30;
+opacity: 0.5;
+}
+
+.step.active {
+opacity: 1
+}
+
+
+.step.finish {
+color: #fff;
+background: #8ae46e;
+opacity: 1;
+
+}
+
+
+
+.all-steps {
+text-align: center;
+margin-top: 30px;
+margin-bottom: 30px
+}
+
+.thanks-message {
+display: none
+}</style>
+  </body>
+  	<!--start overlay-->
+    <div class="overlay toggle-menu"></div>
+		<!--end overlay-->
+  <!--Start Back To Top Button-->
+  <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+  <!--End Back To Top Button-->
+  <!--start color switcher-->
+  <div class="right-sidebar">
+    <div style="background-color: rgba(0,0,0,.2);" class="switcher-icon">
+      <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+    </div>
+    <div class="right-sidebar-content">
+
+      <p class="mb-0">Gaussion Texture</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme1"></li>
+        <li id="theme2"></li>
+        <li id="theme3"></li>
+        <li id="theme4"></li>
+        <li id="theme5"></li>
+        <li id="theme6"></li>
+      </ul>
+
+      <p class="mb-0">Gradient Background</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme7"></li>
+        <li id="theme8"></li>
+        <li id="theme9"></li>
+        <li id="theme10"></li>
+        <li id="theme11"></li>
+        <li id="theme12"></li>
+		    <li id="theme13"></li>
+        <li id="theme14"></li>
+        <li id="theme15"></li>
+      </ul>
+      
+     </div>
+   </div>
+  <!--end color switcher-->
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/popper.min.js"></script>
+    <script src="../../../assets/js/bootstrap.min.js"></script>
+    
+   <!-- simplebar js -->
+    <script src="../../../assets/plugins/simplebar/js/simplebar.js"></script>
+    <!-- sidebar-menu js -->
+    <script src="../../../assets/js/sidebar-menu.js"></script>
+    <!-- loader scripts -->
+    <script src="../../../assets/js/jquery.loading-indicator.js"></script>
+    <!-- Custom scripts -->
+    <script src="../../../assets/js/app-script.js"></script>
+    <!-- Chart js -->
+    
+    <script src="../../../assets/plugins/Chart.js/Chart.min.js"></script>
+   
+    <!-- Index js -->
+    <script src="../../../assets/js/index.js"></script>
