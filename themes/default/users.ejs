@@ -1,0 +1,273 @@
+<head>
+    <%- include('./parts/head') %>
+      <!-- Vector CSS -->
+      <link href="../../../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+      <!-- simplebar CSS-->
+      <link href="../../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+      <!-- Bootstrap core CSS-->
+      <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+      <!-- animate CSS-->
+      <link href="../../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+      <!-- Icons CSS-->
+      <link href="../../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+      <!-- Sidebar CSS-->
+      <link href="../../../assets/css/sidebar-menu.css" rel="stylesheet"/>
+      <!-- Custom Style-->
+      <link href="../../../assets/css/app-style.css" rel="stylesheet"/>
+  </head>
+  <style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      font-family: poppins;
+    }
+    </style>
+      <body>
+        <!-- Start wrapper-->
+   <div id="wrapper">
+    <!--Start sidebar-wrapper-->
+<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+  <div class="brand-logo">
+   <a>
+    <img src="<%= settings.logo %>" class="logo-icon rotate" alt="logo icon">
+    <h5 class="logo-text"><%= settings.name %></h5>
+  </a>
+</div>
+<ul class="sidebar-menu do-nicescrol">
+   <li>
+     <a href="../../dashboard">
+       <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+     </a>
+   </li>
+
+   <li>
+     <a href="../../new">
+      <i class="bi bi-cloud-plus"></i> <span>Create</span>
+     </a>
+   </li>
+
+   <li>
+     <a href="../../earn">
+      <i class="bi bi-currency-exchange"></i> <span>Earn</span>
+     </a>
+   </li>
+
+   <% if (settings.api.client.coins.store.enabled == true) { %>
+   <li>
+     <a href="../../store">
+      <i class="bi bi-shop"></i> <span>Store</span>
+     </a>
+   </li>
+   <% } %>
+
+   <li>
+     <a href="../../gift">
+      <i class="bi bi-gift"></i> <span>Gift</span>
+     </a>
+   </li>
+
+   <% if (pterodactyl.root_admin == true) { %>
+   <li>
+     <a href="../../admin">
+      <i class="bi bi-shield-lock"></i> <span>Admin</span>
+     </a>
+   </li>
+   <% } %>
+
+   <li class="sidebar-header"><%= settings.name %></li>
+   <li><a href="../tos" style="cursor: pointer;"><i class="zmdi zmdi-coffee text-danger"></i> <span>TOS</span></a></li>
+   <li><a href="<%= settings.pterodactyl.domain %>" style="cursor: pointer;"><i class="zmdi zmdi-spinner text-success"></i> <span>Panel</span></a></li>
+   <li><a href="<%= settings.discord %>" style="cursor: pointer;"><i class="bi bi-discord"></i><span>Discord</span></a></li>
+   <% if (settings.website.website_link_enabled == true) { %>
+    <li><a href="<%= settings.website.website_link %>" style="cursor: pointer;"><i class="bi bi-globe"></i><span>Website</span></a></li>
+   <% } %>
+ </ul>
+
+</div>
+<!--End sidebar-wrapper-->
+   
+    <!-- sidebar-menu js -->
+    <script src="../../../assets/js/sidebar-menu.js"></script>
+
+<% if(settings.rotatelogo == true) { %>
+  <style>
+    .rotate {
+animation: rotation <%= settings.rotatespeed %> infinite linear;
+}
+
+@keyframes rotation {
+from {
+transform: rotate(0deg);
+}
+to {
+transform: rotate(360deg);
+}
+}
+    </style>
+    <% } %>
+    <!--Start topbar header-->
+<header class="topbar-nav">
+  <nav class="navbar navbar-expand fixed-top">
+   <ul class="navbar-nav mr-auto align-items-center">
+     <li class="nav-item">
+       <a class="nav-link toggle-menu" href="javascript:void();">
+        <i class="icon-menu menu-icon"></i>
+      </a>
+     </li>
+     <li class="nav-item align-items-center">
+      <a style="color: white;">Welcome to <%= settings.name %>!</a>
+     </li>
+   </ul>
+   <script>
+      let balance = document.getElementById("balance")
+      btn.coins = Math.floor(<%= coins %> * 100) / 100
+    </script>
+    <ul class="navbar-nav align-items-center right-nav-link">
+     <li class="nav-item">
+       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
+         <span class="user-profile"><img src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" class="img-circle" alt="user avatar"></span>
+       </a>
+       <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-item user-details">
+         <a href="javaScript:void();">
+            <div class="media">
+              <div class="avatar"><img class="align-self-start mr-3" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>.png?size=256" alt="user avatar"></div>
+             <div class="media-body">
+             <h6 class="mt-2 user-title"><%= userinfo.username %></h6>
+             <p class="user-subtitle"><%= pterodactyl.email %></p>
+             </div>
+            </div>
+           </a>
+         </li>
+         <li class="dropdown-divider"></li>
+         <li class="dropdown-item"><i class="zmdi zmdi-balance mr-2"></i> <%= coins %> coins</li>
+         <li class="dropdown-divider"></li>
+         <li onclick="location.href = '../../settings';" style="cursor: pointer;"  class="dropdown-item"><i class="icon-settings mr-2"></i> Account</li>
+         <li class="dropdown-divider"></li>
+         <li onclick="location.href = '../../updateinfo';" style="cursor: pointer;" class="dropdown-item"><i class="bi bi-arrow-repeat mr-2"></i> Refresh</li>
+         <li class="dropdown-divider"></li>
+         <li onclick="location.href = '../../logout';" style="color: rgb(255, 47, 47); cursor: pointer;" class="dropdown-item"><i onclick="location.href = '../logout';" class="icon-power mr-2"></i> Logout</li>
+       </ul>
+     </li>
+   </ul>
+ </nav>
+ </header>
+ <!--End topbar header-->
+    <div class="clearfix"></div>
+      
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="row mt-3">
+          <div class="col-lg-6">
+             <div class="card">
+               <div class="card-body">
+                <div class="form-group">
+                 <label for="input-6">Username:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="name" readonly>
+                </div>
+                <div class="form-group">
+                 <label for="input-7">ID:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="userid" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="input-7">UUID:</label>
+                  <input class="form-control form-control-rounded" value="Loading..." id="uuid" readonly>
+                 </div>
+             </div>
+             </div>
+          </div>
+    
+          <div class="col-lg-6">
+            <div class="card">
+               <div class="card-body">
+                <div class="form-group">
+                 <label for="input-6">Email:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="email" readonly>
+                </div>
+                <div class="form-group">
+                 <label for="input-7">Full Name:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="fullname" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="input-7">Admin:</label>
+                  <input class="form-control form-control-rounded" value="Loading..." id="admin" readonly>
+                 </div>
+             </div>
+             </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-content">
+              <div class="row row-group m-0">
+                  <div class="col-12 col-lg-6 col-xl-3 border-light">
+                      <div class="card-body">
+                        <h5 class="text-white mb-0"><input value="Loading..." id="ram" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                        <p class="mb-0 text-white small-font">MB RAM</p>
+                      </div>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-3 border-light">
+                    <div class="card-body">
+                      <h5 class="text-white mb-0"><input value="Loading..." id="disk" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                      <p class="mb-0 text-white small-font">MB DISK</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-3 border-light">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"><input value="Loading..." id="cpu" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                    <p class="mb-0 text-white small-font">% CPU</p>
+                  </div>
+              </div>
+              <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0"><input value="Loading..." id="servers" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                  <p class="mb-0 text-white small-font">SLOTS</p>
+                </div>
+            </div>
+              </div>
+          </div>
+        </div>
+                  </div>
+              </div>
+            </div>
+            
+      <script>
+        async function get() {
+            const query = new URLSearchParams(window.location.search)
+            fetch('/api/admin/users/details?id=' + parseInt(query.get('id')))
+      .then(response => response.json())
+      .then(json => {
+        document.getElementById('name').value=json.username
+        document.getElementById('userid').value=json.id
+        document.getElementById('email').value=json.email
+        document.getElementById('uuid').value=json.uuid
+        document.getElementById('fullname').value=`${json.first_name} ${json.last_name}`
+        document.getElementById('admin').value=json.admin
+        document.getElementById('ram').value=json.ram
+        document.getElementById('disk').value=json.disk
+        document.getElementById('cpu').value=json.cpu
+        document.getElementById('servers').value=json.servers
+        })
+        }
+        get()
+      </script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="../../../assets/js/jquery.min.js"></script>
+      <script src="../../../assets/js/popper.min.js"></script>
+      <script src="../../../assets/js/bootstrap.min.js"></script>
+      
+     <!-- simplebar js -->
+      <script src="../../../assets/plugins/simplebar/js/simplebar.js"></script>
+      <!-- sidebar-menu js -->
+      <script src="../../../assets/js/sidebar-menu.js"></script>
+      <!-- loader scripts -->
+      <script src="../../../assets/js/jquery.loading-indicator.js"></script>
+      <!-- Custom scripts -->
+      <script src="../../../assets/js/app-script.js"></script>
+      <!-- Chart js -->
+      
+      <script src="../../../assets/plugins/Chart.js/Chart.min.js"></script>
+     
+      <!-- Index js -->
+      <script src="../../../assets/js/index.js"></script>

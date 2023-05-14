@@ -1,0 +1,263 @@
+<div class="card">
+  <div class="card-body">
+<div style="border-radius: 15px;" class="table-responsive">
+  <% if (pterodactyl.root_admin == true) { %>
+    <label class="switch">
+      <input type="checkbox" id="table-switch">
+      <div>
+        <span id="others" style="color: white; display: none;">Showing other servers</span>
+        <span id="yours" style="color: white;">Showing your servers</span>
+      </div>
+  </label>
+<% } else { %>
+  <div class="card-title">Your Servers</div>
+<% } %>
+<div style="border-radius: 15px;" class="table-responsive">
+  <table class="table" id="table-1">
+    <thead>
+      <tr>
+        <th style="color: white;">Name</th>
+        <th style="color: white;">Ram</th>
+        <th style="color: white;">Disk</th>
+        <th style="color: white;">Cpu</th>
+        <% if (settings.renewals.status == true) { %>
+        <th style="color: white;">Renew</th>
+        <% } %>
+        <th style="color: white;">Edit</th>
+        <th style="color: white;">Delete</th>
+        <th style="color: white;">Link</th>
+      </tr>
+    </thead>
+    <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+    <tbody>
+      <tr style="font-size: large;">
+        <td><p><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 15 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 12) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></p></td>
+        <td><p><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB</p></td>
+        <td><p><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB</p></td>
+        <td><p><%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>%</p></td>
+          <% if (settings.renewals.status == true) { %>
+            <td>
+                <a href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">
+                    <button class="btn btn-icon btn-warning" type="button">
+                        <span class="btn-inner--icon"><i class="bi bi-arrow-repeat"></i></span>
+                    </button>
+                </a>
+              </td>
+            <% } %>
+        <td>
+          <a href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">
+              <button class="btn btn-icon btn-primary" type="button">
+                  <span class="btn-inner--icon"><i class="bi bi-pencil-square"></i></span>
+              </button>
+          </a>
+      </td>
+      <td>
+        <a style="cursor: pointer;" class="btn btn-icon btn-danger" onclick="if (confirm('Please confirm you want to delete this server, the data cannot be retrieved after it has been deleted.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }"><i class="bi bi-trash3"></i></a>
+      </td>
+          <td>
+          <a href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" target="_blank" rel="noopener noreferrer" class="btn btn-icon btn-success"><i class="bi bi-link-45deg"></i></a>
+            </td>
+      </tr>
+    </tbody>
+    <% } %>
+  </table>
+<div style="border-radius: 15px;" class="table-responsive">
+<table class="table" id="table" style="display: none;">
+  <input type="text" class="form-control" id="search" style="display: none;" placeholder="Search a server by its ID or Name">
+  <thead>
+    <tr>
+      <th><h6>Id</h6></th>
+      <th><h6>Name</h6></th>
+      <th><h6>Node</h6></th>
+      <th><h6>Egg</h6></th>
+      <th><h6>Ram</h6></th>
+      <th><h6>Cpu</h6></th>
+      <th><h6>Disk</h6></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<style>
+  .switch {
+  --line: #505162;
+  --dot: #F7F8FF;
+  --circle: #9EA0BE;
+  --duration: .3s;
+  --text: #9EA0BE;
+  cursor: pointer;
+}
+.switch input {
+  display: none;
+}
+.switch input + div {
+  position: relative;
+}
+.switch input + div:before, .switch input + div:after {
+  --s: 1;
+  content: "";
+  position: absolute;
+  height: 4px;
+  top: 10px;
+  width: 24px;
+  background: var(--line);
+  transform: scaleX(var(--s));
+  transition: transform var(--duration) ease;
+}
+.switch input + div:before {
+  --s: 0;
+  left: 0;
+  transform-origin: 0 50%;
+  border-radius: 2px 0 0 2px;
+}
+.switch input + div:after {
+  left: 28px;
+  transform-origin: 100% 50%;
+  border-radius: 0 2px 2px 0;
+}
+.switch input + div span {
+  padding-left: 56px;
+  line-height: 24px;
+  color: var(--text);
+}
+.switch input + div span:before {
+  --x: 0;
+  --b: var(--circle);
+  --s: 4px;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 var(--s) var(--b);
+  transform: translateX(var(--x));
+  transition: box-shadow var(--duration) ease, transform var(--duration) ease;
+}
+.switch input + div span:not(:empty) {
+  padding-left: 64px;
+}
+.switch input:checked + div:before {
+  --s: 1;
+}
+.switch input:checked + div:after {
+  --s: 0;
+}
+.switch input:checked + div span:before {
+  --x: 28px;
+  --s: 12px;
+  --b: var(--dot);
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: inherit;
+}
+*:before, *:after {
+  box-sizing: inherit;
+}
+body .switch + .switch {
+  margin-top: 32px;
+}
+</style>
+<script>
+  async function servers() {
+  var table = document.getElementById("table");
+  
+  fetch('/api/admin/servers')
+.then(response => response.json())
+.then(json => {
+  for(let i = 0; i < json.length; i++) {
+  var row = table.insertRow(1);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  var cell6 = row.insertCell(5);
+  var cell7 = row.insertCell(6);
+  cell1.innerHTML = `<p>${json[i].id}</p>`;
+  cell2.innerHTML = `<p>${json[i].name}</p>`;
+  cell3.innerHTML = `<p>${json[i].node}</p>`;
+  cell4.innerHTML = `<p>${json[i].egg}</p>`;
+  cell5.innerHTML = `<p>${json[i].ram} MB</p>`;
+  cell6.innerHTML = `<p>${json[i].cpu}%</p>`;
+  cell7.innerHTML = `<p>${json[i].disk / 1024} GB</p>`;
+  }
+})
+  
+}
+  servers()
+</script>
+<script>
+  const tableSwitch = document.querySelector('#table-switch');
+const table1 = document.querySelector('#table-1');
+const table2 = document.querySelector('#table');
+const search = document.querySelector('#search');
+const others = document.querySelector('#others');
+const yours = document.querySelector('#yours');
+
+tableSwitch.addEventListener('change', () => {
+if (tableSwitch.checked) {
+  table1.style.display = 'none';
+  table2.style.display = 'table';
+  search.style.display = 'table';
+  others.style.display = 'table';
+  yours.style.display = 'none';
+} else {
+  table1.style.display = 'table';
+  table2.style.display = 'none';
+  search.style.display = 'none';
+  others.style.display = 'none';
+  yours.style.display = 'table';
+}
+});
+</script>
+<script>
+  const searchInput = document.getElementById('search');
+  const table = document.getElementById('table');
+  const rows = table.getElementsByTagName('tr');
+  
+  searchInput.addEventListener('keyup', function() {
+    const query = this.value.toLowerCase();
+    
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const cells = row.getElementsByTagName('td');
+      let match = false;
+      
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+        if (cell.innerHTML.toLowerCase().includes(query)) {
+          match = true;
+          break;
+        }
+      }
+      
+      if (match) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+  });
+</script>
+<!-- Include Bootstrap 5 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+  <!-- Include Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+
+</body>
+</html>
