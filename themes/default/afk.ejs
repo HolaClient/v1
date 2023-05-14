@@ -1,0 +1,100 @@
+<head>
+    <%- include('./parts/head') %>
+      <!-- Vector CSS -->
+      <link href="../../../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+      <!-- simplebar CSS-->
+      <link href="../../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+      <!-- Bootstrap core CSS-->
+      <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+      <!-- animate CSS-->
+      <link href="../../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+      <!-- Icons CSS-->
+      <link href="../../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+      <!-- Sidebar CSS-->
+      <link href="../../../assets/css/sidebar-menu.css" rel="stylesheet"/>
+      <!-- Custom Style-->
+      <link href="../../../assets/css/app-style.css" rel="stylesheet"/>
+  </head>
+  <style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      font-family: poppins;
+    }
+    </style>
+      <body>
+        <!-- Start wrapper-->
+   <div id="wrapper">
+    <%- include('./parts/sidebar') %>
+    <%- include('./parts/topnav') %>
+    <div class="clearfix"></div>
+      
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <!---- ALERTS ----->
+      <%- include('./parts/alert') %>
+      <br>
+      <% if (req.query.err) { %>
+        <div style="border-radius: 15px;" class="alert">
+            <% if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
+              <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+                <strong>[HCOE1] You must complete the captcha before proceeding!</strong>
+                <button aria-hidden="true" class="close" type="button">&times;</button>
+              </div>
+      <% } else if (req.query.err == "ADBLOCKER") { %>
+         <div style="border-radius: 15px; text-align: center;" class="alert alert_error">
+            <strong>[HCOE2] You have answered the captcha wrongly!</strong>
+            <button aria-hidden="true" class="close" type="button">&times;</button>
+            </div>
+            <% } %>
+        </div>
+      <% } %>
+      <% if (req.query.success) { %>
+        <div style="border-radius: 15px; text-align: center;" class="alert alert_success">
+          <strong>You earned <%= settings.linkvertise.coins%> coins by completing a Linkvertise link!</strong>
+          <button aria-hidden="true" class="close" type="button">&times;</button>
+        </div>
+      <% } %>
+
+      <center><a style="color:white">Every <% if (settings.api.arcio["afk page"].every !== 1) { %><%= settings.api.arcio["afk page"].every %> seconds<% } else { %>second<% } %>, you will get <%= settings.api.arcio["afk page"].coins == 1 ? "a" : settings.api.arcio["afk page"].coins %> coin<%= settings.api.arcio["afk page"].coins == 1 ? "" : "s" %>.</a></center>
+      <center><a style="color:white">You will gain coins again in <span id="arciotimer"><%= settings.api.arcio["afk page"].every %></span> seconds.</a></center>
+      <center><a style="color:white">You have gained <span id="arciogainedcoins">0</span> coins in this session</a></center>
+      <center><a style="color:white">You can check your total coins at your profile dropdown.</a></center>
+      <script>
+          <%- arcioafktext %>
+      </script>
+
+    </div>
+  </div>
+ </div>
+</body>
+        <!--start overlay-->
+      <div class="overlay toggle-menu"></div>
+          <!--end overlay-->
+    <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+      <!-- Bootstrap core JavaScript-->
+      <script src="../../../assets/js/jquery.min.js"></script>
+      <script src="../../../assets/js/popper.min.js"></script>
+      <script src="../../../assets/js/bootstrap.min.js"></script>
+      
+     <!-- simplebar js -->
+      <script src="../../../assets/plugins/simplebar/js/simplebar.js"></script>
+      <!-- sidebar-menu js -->
+      <script src="../../../assets/js/sidebar-menu.js"></script>
+      <!-- loader scripts -->
+      <script src="../../../assets/js/jquery.loading-indicator.js"></script>
+      <!-- Custom scripts -->
+      <script src="../../../assets/js/app-script.js"></script>
+      <!-- Chart js -->
+      
+      <script src="../../../assets/plugins/Chart.js/Chart.min.js"></script>
+     
+      <!-- Index js -->
+      <script src="../../../assets/js/index.js"></script>
+      <footer>
+        <%- include('./parts/footer') %>
+      </footer>

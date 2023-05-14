@@ -1,0 +1,147 @@
+<head>
+    <%- include('./parts/head') %>
+      <!-- Vector CSS -->
+      <link href="../../../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+      <!-- simplebar CSS-->
+      <link href="../../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+      <!-- Bootstrap core CSS-->
+      <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+      <!-- animate CSS-->
+      <link href="../../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+      <!-- Icons CSS-->
+      <link href="../../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+      <!-- Sidebar CSS-->
+      <link href="../../../assets/css/sidebar-menu.css" rel="stylesheet"/>
+      <!-- Custom Style-->
+      <link href="../../../assets/css/app-style.css" rel="stylesheet"/>
+  </head>
+  <style>
+    body {
+      background-image: url('<%= settings.background %>');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      font-family: poppins;
+    }
+    </style>
+      <body>
+        <!-- Start wrapper-->
+   <div id="wrapper">
+    <%- include('./parts/menu') %>
+    <%- include('./parts/topnav') %>
+    <div class="clearfix"></div>
+      
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="row mt-3">
+          <div class="col-lg-6">
+             <div class="card">
+               <div class="card-body">
+                <div class="form-group">
+                 <label for="input-6">Username:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="name" readonly>
+                </div>
+                <div class="form-group">
+                 <label for="input-7">ID:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="userid" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="input-7">UUID:</label>
+                  <input class="form-control form-control-rounded" value="Loading..." id="uuid" readonly>
+                 </div>
+             </div>
+             </div>
+          </div>
+    
+          <div class="col-lg-6">
+            <div class="card">
+               <div class="card-body">
+                <div class="form-group">
+                 <label for="input-6">Email:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="email" readonly>
+                </div>
+                <div class="form-group">
+                 <label for="input-7">Full Name:</label>
+                 <input class="form-control form-control-rounded" value="Loading..." id="fullname" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="input-7">Admin:</label>
+                  <input class="form-control form-control-rounded" value="Loading..." id="admin" readonly>
+                 </div>
+             </div>
+             </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-content">
+              <div class="row row-group m-0">
+                  <div class="col-12 col-lg-6 col-xl-3 border-light">
+                      <div class="card-body">
+                        <h5 class="text-white mb-0"><input value="Loading..." id="ram" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                        <p class="mb-0 text-white small-font">MB RAM</p>
+                      </div>
+                  </div>
+                  <div class="col-12 col-lg-6 col-xl-3 border-light">
+                    <div class="card-body">
+                      <h5 class="text-white mb-0"><input value="Loading..." id="disk" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                      <p class="mb-0 text-white small-font">MB DISK</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-3 border-light">
+                  <div class="card-body">
+                    <h5 class="text-white mb-0"><input value="Loading..." id="cpu" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                    <p class="mb-0 text-white small-font">% CPU</p>
+                  </div>
+              </div>
+              <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0"><input value="Loading..." id="servers" style="color: white; background-color: transparent; border-color: transparent;" readonly> <span class="float-right"><i class="bi bi-memory"></i></span></h5>
+                  <p class="mb-0 text-white small-font">SLOTS</p>
+                </div>
+            </div>
+              </div>
+          </div>
+        </div>
+                  </div>
+              </div>
+            </div>
+            
+      <script>
+        async function get() {
+            const query = new URLSearchParams(window.location.search)
+            fetch('/api/admin/users/details?id=' + parseInt(query.get('id')))
+      .then(response => response.json())
+      .then(json => {
+        document.getElementById('name').value=json.username
+        document.getElementById('userid').value=json.id
+        document.getElementById('email').value=json.email
+        document.getElementById('uuid').value=json.uuid
+        document.getElementById('fullname').value=`${json.first_name} ${json.last_name}`
+        document.getElementById('admin').value=json.admin
+        document.getElementById('ram').value=json.ram
+        document.getElementById('disk').value=json.disk
+        document.getElementById('cpu').value=json.cpu
+        document.getElementById('servers').value=json.servers
+        })
+        }
+        get()
+      </script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="../../../assets/js/jquery.min.js"></script>
+      <script src="../../../assets/js/popper.min.js"></script>
+      <script src="../../../assets/js/bootstrap.min.js"></script>
+      
+     <!-- simplebar js -->
+      <script src="../../../assets/plugins/simplebar/js/simplebar.js"></script>
+      <!-- sidebar-menu js -->
+      <script src="../../../assets/js/sidebar-menu.js"></script>
+      <!-- loader scripts -->
+      <script src="../../../assets/js/jquery.loading-indicator.js"></script>
+      <!-- Custom scripts -->
+      <script src="../../../assets/js/app-script.js"></script>
+      <!-- Chart js -->
+      
+      <script src="../../../assets/plugins/Chart.js/Chart.min.js"></script>
+     
+      <!-- Index js -->
+      <script src="../../../assets/js/index.js"></script>
