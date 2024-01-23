@@ -25,7 +25,7 @@ Please refer `FEATURES.md`.
 
 ## ⚖️ Legal
 
-Please refer `LICENSE` and `CREDITS` files for better understability.
+Please refer [`LICENSE`](https://github.com/HolaClient/legacy/blob/main/LICENSE) and [`CREDITS`](https://github.com/HolaClient/legacy/blob/main/CREDITS) files for better understability.
 
 ---
 
@@ -46,3 +46,9 @@ Please note that HolaClient versions below `v1.5.8` are based on Heliactyl v12.0
 - [**Video Tutorial**](https://youtu.be/V4FnFKL3nGw)
 
 ---
+
+## 📄 License
+Code released under [Apache v2](https://github.com/HolaClient/legacy/blob/main/LICENSE) license.
+- - -
+<br>
+<p align="center">Copyright © 2022 - 2024 HolaClient</p>
