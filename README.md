@@ -1,7 +1,7 @@
 ![image](https://github.com/HolaClient/HolaClient/assets/102372274/8cc5e386-223c-434e-ab35-e587515d5138)
 
 <h1 align="center">HolaClient Legacy v1</h1>
-<p align="center" dir="auto">Trusted by hundreds of hosts and thousands of users.</p>
+<p align="center" dir="auto">Trusted by thousands of hosts and users.</p>
 
 ---
 
